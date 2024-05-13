@@ -1,0 +1,2 @@
+https://github.com/attic-stuff/trianglestuffs-for-gamemaker
+https://www.gmlscripts.com/script/point_in_polygon

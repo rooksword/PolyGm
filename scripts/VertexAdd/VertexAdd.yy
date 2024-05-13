@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"VertexAdd",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"VertexAdd",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

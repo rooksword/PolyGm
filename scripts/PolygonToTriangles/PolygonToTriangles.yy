@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PolygonToTriangles",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PolygonToTriangles",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

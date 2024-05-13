@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"LinesIntersect",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"LinesIntersect",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

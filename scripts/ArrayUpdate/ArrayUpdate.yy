@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ArrayUpdate",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ArrayUpdate",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

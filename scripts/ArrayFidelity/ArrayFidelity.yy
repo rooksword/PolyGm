@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ArrayFidelity",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ArrayFidelity",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

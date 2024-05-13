@@ -1,0 +1,11 @@
+{
+  "$GMNotes":"",
+  "%Name":"Research",
+  "name":"Research",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMNotes",
+  "resourceVersion":"2.0",
+}
