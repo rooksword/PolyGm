@@ -23,7 +23,17 @@ switch state
 			{
 				state = EDITOR_STATES.CREATE;	
 			}
-			i++; if _b.Hover() _hover = true;	
+			i++; if _b.Hover() _hover = true;
+			
+			var _b = new Button("Auto draw = " + string(auto_draw));
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				if auto_draw == 0 auto_draw = get_integer("Distance between points:", 64);
+				else auto_draw = 0;
+			}
+			i++; if _b.Hover() _hover = true;
 		}
 		else
 		{

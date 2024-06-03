@@ -15,7 +15,6 @@ mouse_over_shape = false;
 #region Drawing
 
 drawing = true;
-draw_distance = 64;
 point_size = 4;
 
 right = 0;
