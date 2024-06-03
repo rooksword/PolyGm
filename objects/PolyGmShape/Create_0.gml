@@ -23,6 +23,8 @@ left = 0;
 top = 0;
 bottom = 0;
 
+center = new Vec2();
+
 nearest_point0 = -1;
 nearest_point0_index = -1;
 nearest_point1 = -1;

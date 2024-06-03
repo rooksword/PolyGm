@@ -75,6 +75,8 @@ if vbuff_empty == false
 		
 		#endregion
 		
+		center = new Vec2(mean(right, left), mean(top, bottom));
+		
 		if point_in_rectangle(mouse_x, mouse_y, _point.x - point_size, _point.y - point_size, _point.x + point_size, _point.y + point_size)
 		{
 			hover_point = _point;	
@@ -159,23 +161,9 @@ else if moving_shape
 		_p.Add(new Vec2(mouse_x - PolyGmEditor.mouse_xprevious, mouse_y - PolyGmEditor.mouse_yprevious)); 
 	}
 	ArrayUpdate();
-}
-
-if hover_shape
-{
-	var _m = keyboard_check(vk_left) - keyboard_check(vk_right);
-	if (keyboard_check(vk_left) and !keyboard_check(vk_right)) or (keyboard_check(vk_right) and !keyboard_check(vk_left))
+	
+	if mouse_check_button_released(mb_left)
 	{
-		for (var i = 0; i < array_length(array); i++;)
-		{
-			var _p = array[i];
-			var _pos = new Vec2(mouse_x, mouse_y);
-			var _dist = point_distance(_p.x, _p.y, _pos.x, _pos.y);
-			var _dir = point_direction(_p.x, _p.y, _pos.x, _pos.y) + (2 * _m);
-					
-			_p.x = _pos.x - dcos(_dir) * _dist;
-			_p.y = _pos.y + dsin(_dir) * _dist;
-		}
-		ArrayUpdate();
+		moving_shape = false;	
 	}
 }
