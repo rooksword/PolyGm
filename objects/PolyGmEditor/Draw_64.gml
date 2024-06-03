@@ -37,6 +37,33 @@ switch state
 			}
 			i++; if _b.Hover() _hover = true;
 			
+			var _b = new Button("Duplicate shape");
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				var _new_shape = instance_create_layer(0, 0, "Instances", PolyGmShape);	
+				_new_shape.array = [];
+				for (var j = 0; j < array_length(shape_selected.array); j++;)
+				{
+					var _p = shape_selected.array[j];
+					array_push(_new_shape.array, new Vec2(_p.x, _p.y));
+				}
+				with _new_shape
+				{
+					drawing = false;
+					for (var j = 0; j < array_length(array); j++;)
+					{
+						var _point = array[j];
+						_point.x += 100;
+					}
+					ArrayUpdate();
+					vbuff_empty = false;
+				}
+				shape_selected = -1;
+			}
+			i++; if _b.Hover() _hover = true;
+			
 			var _b = new Button("Rotate shape");
 			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
 			_b.Draw();

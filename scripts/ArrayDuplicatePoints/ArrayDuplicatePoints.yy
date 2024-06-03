@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"ArrayDuplicatePoints",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"ArrayDuplicatePoints",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

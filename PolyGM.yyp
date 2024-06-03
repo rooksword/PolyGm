@@ -22,6 +22,7 @@
     {"id":{"name":"PolyGmEditor","path":"objects/PolyGmEditor/PolyGmEditor.yy",},},
     {"id":{"name":"PolyGmShape","path":"objects/PolyGmShape/PolyGmShape.yy",},},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},},
+    {"id":{"name":"ArrayDuplicatePoints","path":"scripts/ArrayDuplicatePoints/ArrayDuplicatePoints.yy",},},
     {"id":{"name":"ArrayUpdate","path":"scripts/ArrayUpdate/ArrayUpdate.yy",},},
     {"id":{"name":"BasicButtons","path":"scripts/BasicButtons/BasicButtons.yy",},},
     {"id":{"name":"LinesIntersect","path":"scripts/LinesIntersect/LinesIntersect.yy",},},
