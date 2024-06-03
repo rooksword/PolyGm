@@ -12,6 +12,7 @@ switch state
 			if drawing
 			or hover_shape
 			or hover_point != -1
+			or hover_handle != -1
 			or distance_to_nearest_line < distance_to_nearest_line_min
 			{
 				_can_draw = false;

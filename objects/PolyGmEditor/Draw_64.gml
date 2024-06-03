@@ -105,13 +105,13 @@ switch state
 		break;
 }
 
-var _mouse_over_shape = false;
+var _select = false;
 with PolyGmShape
 {
-	if mouse_over_shape _mouse_over_shape = true;	
+	if mouse_over_shape or hover_handle != -1 _select = true;	
 }
 
-if !_mouse_over_shape and !hover_on_button and shape_selected != -1 and mouse_check_button_pressed(mb_left)
+if !_select and !hover_on_button and shape_selected != -1 and mouse_check_button_pressed(mb_left)
 {
 	shape_selected = -1;	
 }

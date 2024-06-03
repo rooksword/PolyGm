@@ -31,6 +31,7 @@
     {"id":{"name":"PolygonIsClockwise","path":"scripts/PolygonIsClockwise/PolygonIsClockwise.yy",},},
     {"id":{"name":"PolygonRotate","path":"scripts/PolygonRotate/PolygonRotate.yy",},},
     {"id":{"name":"PolygonToTriangles","path":"scripts/PolygonToTriangles/PolygonToTriangles.yy",},},
+    {"id":{"name":"PolygonUpdate","path":"scripts/PolygonUpdate/PolygonUpdate.yy",},},
     {"id":{"name":"Vec2","path":"scripts/Vec2/Vec2.yy",},},
     {"id":{"name":"VertexAdd","path":"scripts/VertexAdd/VertexAdd.yy",},},
     {"id":{"name":"sh_darken","path":"shaders/sh_darken/sh_darken.yy",},},

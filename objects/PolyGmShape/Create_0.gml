@@ -4,13 +4,13 @@
 
 hover_shape = false;
 hover_point = -1;
+hover_handle = -1;
 
 moving_shape = false;
 moving_point = -1;
+moving_handle = -1;
 
 mouse_over_shape = false;
-
-scale = 1;
 
 #endregion
 
@@ -18,11 +18,33 @@ scale = 1;
 
 drawing = true;
 point_size = 4;
+handle_size = 8;
 
 right = 0;
 left = 0;
 top = 0;
 bottom = 0;
+
+/*
+a-b-c
+h   d
+g-f-e
+*/
+
+function SetHandles()
+{
+	var _o = 16;
+	a = new Vec2(left - _o, top - _o);
+	c = new Vec2(right + _o, top - _o);
+	e = new Vec2(right + _o, bottom + _o);
+	g = new Vec2(left - _o, bottom + _o);
+	
+	b = new Vec2(mean(left, right), top - _o);
+	d = new Vec2(right + _o, mean(top, bottom));
+	f = new Vec2(mean(left, right), bottom + _o);
+	h = new Vec2(left - _o, mean(top, bottom));
+}
+SetHandles();
 
 nearest_point0 = -1;
 nearest_point0_index = -1;
@@ -60,5 +82,6 @@ vbuff_empty = true;
 #region Array
 
 array = [new Vec2(mouse_x, mouse_y)];
+array_tri = [];
 
 #endregion

@@ -38,18 +38,32 @@ if drawing or _selected
 	draw_line(left,  top,    left,  bottom);
 	draw_line(right, top,    right, bottom);
 	
-	draw_set_colour(c_red);
-	var _o = 16;
-	var _s = point_size * 2;
-	draw_circle(left - _o, top - _o, _s, false);
-	draw_circle(right + _o, top - _o, _s, false);
-	draw_circle(right + _o, bottom + _o, _s, false);
-	draw_circle(left - _o, bottom + _o, _s, false);
+	draw_set_colour("a" == hover_handle ? c_red : c_orange);
+	draw_circle(a.x, a.y, handle_size, false);
+	draw_set_colour("b" == hover_handle ? c_red : c_orange);
+	draw_circle(b.x, b.y, handle_size, false);
+	draw_set_colour("c" == hover_handle ? c_red : c_orange);
+	draw_circle(c.x, c.y, handle_size, false);
+	draw_set_colour("d" == hover_handle ? c_red : c_orange);
+	draw_circle(d.x, d.y, handle_size, false);
+	draw_set_colour("e" == hover_handle ? c_red : c_orange);
+	draw_circle(e.x, e.y, handle_size, false);
+	draw_set_colour("f" == hover_handle ? c_red : c_orange);
+	draw_circle(f.x, f.y, handle_size, false);
+	draw_set_colour("g" == hover_handle ? c_red : c_orange);
+	draw_circle(g.x, g.y, handle_size, false);
+	draw_set_colour("h" == hover_handle ? c_red : c_orange);
+	draw_circle(h.x, h.y, handle_size, false);
 	
-	draw_circle(left - _o, mean(top, bottom), _s, false);
-	draw_circle(right + _o, mean(top, bottom), _s, false);
-	draw_circle(mean(left, right), top - _o, _s, false);
-	draw_circle(mean(left, right), bottom + _o, _s, false);
+	draw_set_colour(c_white);
+	draw_text(a.x, a.y, "A");
+	draw_text(b.x, b.y, "B");
+	draw_text(c.x, c.y, "C");
+	draw_text(d.x, d.y, "D");
+	draw_text(e.x, e.y, "E");
+	draw_text(f.x, f.y, "F");
+	draw_text(g.x, g.y, "G");
+	draw_text(h.x, h.y, "H");
 
 	#endregion
 }
