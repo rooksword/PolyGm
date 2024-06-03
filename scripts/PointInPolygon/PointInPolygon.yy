@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"ArrayFidelity",
+  "%Name":"PointInPolygon",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ArrayFidelity",
+  "name":"PointInPolygon",
   "parent":{
     "name":"PolyGM",
     "path":"PolyGM.yyp",

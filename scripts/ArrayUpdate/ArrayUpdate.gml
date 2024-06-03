@@ -2,14 +2,10 @@ function ArrayUpdate()
 {
 	vertex_begin(vbuff, format);
 
-	for (var i = 0; i < array_length(array); i++;)
+	var _array = PolygonToTriangles(array);
+	for (var i = 0; i < array_length(_array); i++;)
 	{
-		var _array = ArrayFidelity(array[i], fidelity);
-		_array = PolygonToTriangles(_array);
-		for (var j = 0; j < array_length(_array); j++;)
-		{
-			VertexAdd(vbuff, _array[j], uvs, sprite, c_white, 1);
-		}
+		VertexAdd(vbuff, _array[i], uvs, sprite, c_white, 1);
 	}
 
 	vertex_end(vbuff);
