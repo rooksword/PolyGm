@@ -4,15 +4,16 @@ gpu_set_texrepeat(true);
 
 enum EDITOR_STATES
 {
-	IDLE,
-	CREATE
+	EDIT,
+	DRAW
 }
 
-state = EDITOR_STATES.IDLE;
+state = EDITOR_STATES.EDIT;
+
+auto_draw = 64;
 
 shape_selected = -1;
+hover_on_button = false;
 
 mouse_xprevious = mouse_x;
 mouse_yprevious = mouse_y;
-
-auto_draw = 64; // 64

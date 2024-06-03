@@ -27,8 +27,6 @@ if drawing
 		
 		ArrayUpdate();
 		vbuff_empty = false;
-		
-		PolyGmEditor.state = EDITOR_STATES.IDLE;
 	}
 }
 
@@ -49,21 +47,14 @@ if vbuff_empty == false
 	
 	hover_point = -1;
 	
-	#region Find nearest points
+	nearest_point0 = array[0];
+	nearest_point0_index = 0;
 	
-	var _arr = [];
-	array_copy(_arr, 0, array, 0, array_length(array));
-	array_sort(_arr, function(_p, _q)
-	{
-	    return point_distance(mouse_x, mouse_y, _p.x, _p.y) - point_distance(mouse_x, mouse_y, _q.x, _q.y);
-	});
+	var _xsum = 0;
+	var _ysum = 0;
+	var _len = array_length(array);
 	
-	nearest_point0 = _arr[0];
-	nearest_point1 = _arr[1];
-	
-	#endregion
-	
-	for (var i = 0; i < array_length(array); i++;)
+	for (var i = 0; i < _len; i++;)
 	{
 		var _point = array[i];
 		
@@ -75,14 +66,43 @@ if vbuff_empty == false
 		if _point.y > bottom bottom = _point.y;
 		
 		#endregion
-		
-		center = new Vec2(mean(right, left), mean(top, bottom));
+
+		_xsum += _point.x;
+		_ysum += _point.y;
 		
 		if point_in_rectangle(mouse_x, mouse_y, _point.x - point_size, _point.y - point_size, _point.x + point_size, _point.y + point_size)
 		{
 			hover_point = _point;	
 		}
+		
+		var _p = array[i];
+		var _d0 = point_distance(mouse_x, mouse_y, nearest_point0.x, nearest_point0.y);
+		var _d1 = point_distance(mouse_x, mouse_y, _p.x,             _p.y);
+		if _d1 < _d0
+		{
+			nearest_point0 = array[i];
+			nearest_point0_index = i;
+		}
 	}
+	
+	var _next = nearest_point0_index < array_length(array) - 1 ? nearest_point0_index + 1 : 0;
+	var _prev = nearest_point0_index > 0 ? nearest_point0_index - 1 : array_length(array) - 1;
+	var _a = array[_next];
+	var _b = array[_prev];
+	
+	if point_distance(mouse_x, mouse_y, _a.x, _a.y) < point_distance(mouse_x, mouse_y, _b.x, _b.y)
+	{
+		nearest_point1 = _a;
+		nearest_point1_index = _next;
+	}
+	else
+	{
+		nearest_point1 = _b;
+		nearest_point1_index = _prev;
+	}
+	
+	x = _xsum / _len;
+	y = _ysum / _len;
 	
 	hover_shape = hover_point == -1 and distance_to_nearest_line >= distance_to_nearest_line_min and mouse_over_shape;
 
@@ -104,17 +124,6 @@ if vbuff_empty == false
 		mouse_point = new Vec2(nearest_point1.x + _t * _dx, nearest_point1.y + _t * _dy);
 	}
 	
-	var _n0 = function(_element, _index)
-	{
-		return (_element == nearest_point0);
-	}
-	nearest_point0_index = array_find_index(array, _n0);
-	var _n1 = function(_element, _index)
-	{
-		return (_element == nearest_point1);
-	}
-	nearest_point1_index = array_find_index(array, _n1);
-
 	if distance_to_nearest_line > distance_to_nearest_line_min mouse_point = -1;
 		
 	#endregion
@@ -179,5 +188,18 @@ if vbuff_empty == false
 		{
 			moving_shape = false;	
 		}
+	}
+	
+	if keyboard_check_pressed(vk_space)
+	{
+		scale += 0.1;
+		for (var i = 0; i < array_length(array); i++;)
+		{
+			var _p = array[i];
+			var _o = new Vec2(left, mean(top, bottom));
+			_p.x = _o.x + scale * (_p.x - _o.x);
+			_p.y = _o.y + scale * (_p.y - _o.y);
+		}
+		ArrayUpdate();
 	}
 }

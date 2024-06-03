@@ -10,6 +10,8 @@ moving_point = -1;
 
 mouse_over_shape = false;
 
+scale = 1;
+
 #endregion
 
 #region Drawing
@@ -21,8 +23,6 @@ right = 0;
 left = 0;
 top = 0;
 bottom = 0;
-
-center = new Vec2();
 
 nearest_point0 = -1;
 nearest_point0_index = -1;

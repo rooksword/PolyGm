@@ -19,6 +19,7 @@
   "name":"PolyGM",
   "resources":[
     {"id":{"name":"Research","path":"notes/Research/Research.yy",},},
+    {"id":{"name":"PolyGmCamera","path":"objects/PolyGmCamera/PolyGmCamera.yy",},},
     {"id":{"name":"PolyGmEditor","path":"objects/PolyGmEditor/PolyGmEditor.yy",},},
     {"id":{"name":"PolyGmShape","path":"objects/PolyGmShape/PolyGmShape.yy",},},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},},
@@ -33,6 +34,7 @@
     {"id":{"name":"Vec2","path":"scripts/Vec2/Vec2.yy",},},
     {"id":{"name":"VertexAdd","path":"scripts/VertexAdd/VertexAdd.yy",},},
     {"id":{"name":"sh_darken","path":"shaders/sh_darken/sh_darken.yy",},},
+    {"id":{"name":"spr_grid","path":"sprites/spr_grid/spr_grid.yy",},},
     {"id":{"name":"spr_rock","path":"sprites/spr_rock/spr_rock.yy",},},
   ],
   "resourceType":"GMProject",

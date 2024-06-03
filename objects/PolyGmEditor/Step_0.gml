@@ -2,9 +2,9 @@
 
 switch state
 {
-	case EDITOR_STATES.IDLE:
+	case EDITOR_STATES.EDIT:
 		break;
-	case EDITOR_STATES.CREATE:
+	case EDITOR_STATES.DRAW:
 		var _can_draw = true;
 
 		with PolyGmShape
@@ -17,10 +17,15 @@ switch state
 				_can_draw = false;
 			}
 		}
-
-		if _can_draw and mouse_check_button_pressed(mb_left)
+		
+		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
 		{
 			instance_create_layer(mouse_x, mouse_y, "Instances", PolyGmShape);	
 		}
 		break;
 }
+
+instance_activate_all();
+var _cam = PolyGmCamera.cam;
+instance_deactivate_region(_cam.x, _cam.y, _cam.w, _cam.h, false, true);
+instance_activate_object(PolyGmCamera);
