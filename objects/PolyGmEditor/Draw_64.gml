@@ -108,10 +108,13 @@ switch state
 var _select = false;
 with PolyGmShape
 {
-	if mouse_over_shape or hover_handle != -1 _select = true;	
+	if mouse_over_shape or hover_point != -1 or hover_handle != -1 or mouse_point != -1 _select = true;	
 }
 
-if !_select and !hover_on_button and shape_selected != -1 and mouse_check_button_pressed(mb_left)
+if shape_selected != -1 // Shape is selected
+and !hover_on_button // Not over button
+and !_select // Not interacting with shape
+and mouse_check_button_pressed(mb_left) // LMB pressed
 {
 	shape_selected = -1;	
 }
