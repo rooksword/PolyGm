@@ -70,15 +70,11 @@ function PolygonUpdate()
 	
 	SetHandles();
 	
-		hover_handle = -1;
-	if point_in_circle(mouse_x, mouse_y, a.x, a.y, handle_size) hover_handle = "a";
-	if point_in_circle(mouse_x, mouse_y, b.x, b.y, handle_size) hover_handle = "b";
-	if point_in_circle(mouse_x, mouse_y, c.x, c.y, handle_size) hover_handle = "c";
-	if point_in_circle(mouse_x, mouse_y, d.x, d.y, handle_size) hover_handle = "d";
-	if point_in_circle(mouse_x, mouse_y, e.x, e.y, handle_size) hover_handle = "e";
-	if point_in_circle(mouse_x, mouse_y, f.x, f.y, handle_size) hover_handle = "f";
-	if point_in_circle(mouse_x, mouse_y, g.x, g.y, handle_size) hover_handle = "g";
-	if point_in_circle(mouse_x, mouse_y, h.x, h.y, handle_size) hover_handle = "h";
+	hover_handle = -1;
+	for (var i = 0; i < array_length(handles); i++;)
+	{
+		if point_in_circle(mouse_x, mouse_y, handles[i].x, handles[i].y, handle_size) hover_handle = i;	
+	}
 
 	hover_shape =
 		hover_point == -1

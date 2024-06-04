@@ -33,16 +33,30 @@ g-f-e
 
 function SetHandles()
 {
+	handles = [];
+	handles_real = [];
 	var _o = 16;
-	a = new Vec2(left - _o, top - _o);
-	c = new Vec2(right + _o, top - _o);
-	e = new Vec2(right + _o, bottom + _o);
-	g = new Vec2(left - _o, bottom + _o);
+	array_push(handles, 
+		new Vec2(left - _o, top - _o),
+		new Vec2(mean(left, right), top - _o),
+		new Vec2(right + _o, top - _o),
+		new Vec2(right + _o, mean(top, bottom)),
+		new Vec2(right + _o, bottom + _o),
+		new Vec2(mean(left, right), bottom + _o),
+		new Vec2(left - _o, bottom + _o),
+		new Vec2(left - _o, mean(top, bottom))
+	);
 	
-	b = new Vec2(mean(left, right), top - _o);
-	d = new Vec2(right + _o, mean(top, bottom));
-	f = new Vec2(mean(left, right), bottom + _o);
-	h = new Vec2(left - _o, mean(top, bottom));
+	array_push(handles_real, 
+		new Vec2(left, top),
+		new Vec2(mean(left, right), top),
+		new Vec2(right, top),
+		new Vec2(right, mean(top, bottom)),
+		new Vec2(right, bottom),
+		new Vec2(mean(left, right), bottom),
+		new Vec2(left, bottom),
+		new Vec2(left, mean(top, bottom))
+	);
 }
 SetHandles();
 

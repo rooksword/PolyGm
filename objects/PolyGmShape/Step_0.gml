@@ -85,35 +85,29 @@ if vbuff_empty == false
 
 	if moving_handle != -1
 	{
-		var _m, _o;
-		if moving_handle == "a" _m = a;
-		if moving_handle == "b" _m = b;
-		if moving_handle == "c" _m = c;
-		if moving_handle == "d" _m = d;
-		if moving_handle == "e" _m = e;
-		if moving_handle == "f" _m = f;
-		if moving_handle == "g" _m = g;
-		if moving_handle == "h" _m = h;
+		var _m = [4, 5, 6, 7, 0, 1, 2, 3];
+		var _o = _m[moving_handle];
 		
-		if moving_handle == "a" _o = e;
-		if moving_handle == "b" _o = f;
-		if moving_handle == "c" _o = g;
-		if moving_handle == "d" _o = h;
-		if moving_handle == "e" _o = a;
-		if moving_handle == "f" _o = b;
-		if moving_handle == "g" _o = c;
-		if moving_handle == "h" _o = d;
+		show_debug_message(string(moving_handle) + ", " + string(_o));
 		
-		var _x0 = _m.x - _o.x;
-		var _y0 = _m.y - _o.y;
-		var _x1 = mouse_x - _o.x;
-		var _y1 = mouse_y - _o.y;
+		var _x0 = handles_real[moving_handle].x - handles_real[_o].x;
+		var _y0 = handles_real[moving_handle].y - handles_real[_o].y;
+		var _x1 = (mouse_x > right ? mouse_x - 16 : mouse_x + 16) - handles_real[_o].x;
+		var _y1 = (mouse_y > bottom ? mouse_y - 16 : mouse_y + 16) - handles_real[_o].y;
 		
 		for (var i = 0; i < array_length(array); i++;)
 		{
 			var _p = array[i];
-			if _x0 != _x1 _p.x = _o.x + (_x1 / _x0) * (_p.x - _o.x);
-			if _y0 != _y1 _p.y = _o.y + (_y1 / _y0) * (_p.y - _o.y);
+			
+			if handles_real[moving_handle].x != handles_real[_o].x // If mouse handle x is not equal to opposite handle x
+			{
+				_p.x = handles_real[_o].x + ((_x1 / _x0) * (_p.x - handles_real[_o].x)); // Opposite.x + (ratio * difference between point and opposite handle)
+			}
+			
+			if handles_real[moving_handle].y != handles_real[_o].y
+			{
+				_p.y = handles_real[_o].y + ((_y1 / _y0) * (_p.y - handles_real[_o].y));
+			}
 		}
 		ArrayUpdate();
 		

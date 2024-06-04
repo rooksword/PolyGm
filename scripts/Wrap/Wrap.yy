@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"Wrap",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Wrap",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
