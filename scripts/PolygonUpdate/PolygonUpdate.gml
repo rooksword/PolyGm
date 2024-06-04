@@ -87,7 +87,7 @@ function PolygonUpdate()
 	and mouse_over_shape;
 
 	#region Mouse point
-		
+	
 	var _numerator = abs((nearest_point1.y - nearest_point0.y) * mouse_x - (nearest_point1.x - nearest_point0.x) * mouse_y + nearest_point1.x * nearest_point0.y - nearest_point1.y * nearest_point0.x);
 	var _denominator = sqrt(sqr(nearest_point1.y - nearest_point0.y) + sqr(nearest_point1.x - nearest_point0.x));
 	distance_to_nearest_line = _numerator / _denominator;

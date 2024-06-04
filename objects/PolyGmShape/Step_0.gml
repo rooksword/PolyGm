@@ -104,16 +104,16 @@ if vbuff_empty == false
 		if moving_handle == "g" _o = c;
 		if moving_handle == "h" _o = d;
 		
-		var _d0 = point_distance(_m.x, _m.y, _o.x, _o.y);
-		var _d1 = point_distance(mouse_x, mouse_y, _o.x, _o.y);
-		
-		var _scale = (_d1 / _d0);
+		var _x0 = _m.x - _o.x;
+		var _y0 = _m.y - _o.y;
+		var _x1 = mouse_x - _o.x;
+		var _y1 = mouse_y - _o.y;
 		
 		for (var i = 0; i < array_length(array); i++;)
 		{
 			var _p = array[i];
-			if _m.x != _o.x _p.x = _o.x + _scale * (_p.x - _o.x);
-			if _m.y != _o.y _p.y = _o.y + _scale * (_p.y - _o.y);
+			if _x0 != _x1 _p.x = _o.x + (_x1 / _x0) * (_p.x - _o.x);
+			if _y0 != _y1 _p.y = _o.y + (_y1 / _y0) * (_p.y - _o.y);
 		}
 		ArrayUpdate();
 		
