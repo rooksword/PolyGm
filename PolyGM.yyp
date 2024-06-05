@@ -22,6 +22,7 @@
   "resources":[
     {"id":{"name":"PolyGmCamera","path":"objects/PolyGmCamera/PolyGmCamera.yy",},},
     {"id":{"name":"PolyGmEditor","path":"objects/PolyGmEditor/PolyGmEditor.yy",},},
+    {"id":{"name":"PolyGmSave","path":"objects/PolyGmSave/PolyGmSave.yy",},},
     {"id":{"name":"PolyGmShape","path":"objects/PolyGmShape/PolyGmShape.yy",},},
     {"id":{"name":"rm_demo","path":"rooms/rm_demo/rm_demo.yy",},},
     {"id":{"name":"ArrayDuplicatePoints","path":"scripts/ArrayDuplicatePoints/ArrayDuplicatePoints.yy",},},

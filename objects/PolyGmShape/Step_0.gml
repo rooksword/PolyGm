@@ -63,7 +63,7 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 	}
 	
 	if PolyGmEditor.shape_selected == id
-	{
+	{		
 		if mouse_check_button_pressed(mb_left) // Set moving to hover
 		{
 			if hover_handle != -1
@@ -82,22 +82,20 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 				
 				if nearest_point0_index == 0
 				{
-					if nearest_point1_index == 1
-					{
-						array_insert(array, 1, mouse_point);
-						moving_point = array[1];
-					}
-					else
-					{
-						array_push(array, mouse_point);
-						moving_point = mouse_point;
-					}
+					if nearest_point1_index == 1 array_insert(array, 1, mouse_point);
+					else array_push(array, mouse_point);
 				}
 				else
 				{
-					array_insert(array, _index, mouse_point);
-					moving_point = array[_index];
+					if nearest_point1_index == 0
+					{
+						if nearest_point0_index == 1 array_insert(array, 1, mouse_point);
+						else array_push(array, mouse_point);
+					}
+					else array_insert(array, _index, mouse_point);
 				}
+				
+				moving_point = mouse_point;
 				
 				ArrayUpdate();
 			}
@@ -153,7 +151,8 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 		}
 		else if moving_point != -1 // Move point
 		{
-			moving_point.Add(new Vec2(PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious));
+			moving_point.x += PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious;
+			moving_point.y += PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious;
 			ArrayUpdate();
 
 			if mouse_check_button_released(mb_left)
@@ -166,7 +165,8 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 			for (var i = 0; i < array_length(array); i++;)
 			{
 				var _p = array[i];
-				_p.Add(new Vec2(PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious)); 
+				_p.x += PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious;
+				_p.y += PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious;
 			}
 			ArrayUpdate();
 	

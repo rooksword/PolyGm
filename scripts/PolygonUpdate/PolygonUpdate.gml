@@ -11,14 +11,22 @@ function PolygonUpdate()
 	
 	#endregion
 	
+	#region Initialize nearest point
+	
 	nearest_point0 = array[0];
 	nearest_point0_index = 0;
 	
+	#endregion
+	
+	var _len = array_length(array);
+	var _min_distance = infinity;
+	
+	#region Calculate center (step 1 / 3)
+	
 	var _xsum = 0;
 	var _ysum = 0;
-	var _len = array_length(array);
 	
-	var _min_distance = infinity;
+	#endregion
 	
 	for (var i = 0; i < _len; i++;)
 	{
@@ -61,18 +69,32 @@ function PolygonUpdate()
 		if _point.y > bottom bottom = _point.y;
 		
 		#endregion
-
+		
+		#region Calculate center (step 2 / 3)
+		
 		_xsum += _point.x;
 		_ysum += _point.y;
+		
+		#endregion
+		
+		#region Is mouse over point
 		
 		if point_in_rectangle(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size)
 		{
 			hover_point = _point;	
 		}
+		
+		#endregion
 	}
+	
+	#region Calculate center (step 3 / 3)
 	
 	x = _xsum / _len;
 	y = _ysum / _len;
+	
+	#endregion
+	
+	#region Handles
 	
 	SetHandles();
 	
@@ -82,11 +104,19 @@ function PolygonUpdate()
 		if point_in_circle(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, handles[i].x, handles[i].y, global.handle_size) hover_handle = i;	
 	}
 
-	hover_shape =
-		hover_point == -1
-	and hover_handle = -1
-	and distance_to_nearest_line >= distance_to_nearest_line_min
-	and mouse_over_shape;
+	#endregion
+
+	if hover_point == -1                                         // Mouse not over point
+	and hover_handle = -1                                        // Mouse not over handle
+	and distance_to_nearest_line >= distance_to_nearest_line_min // Mouse not near line
+	and mouse_over_shape                                         // Mouse is over shape
+	{
+		hover_shape = true;
+	}
+	else
+	{
+		hover_shape = false;	
+	}
 
 	#region Mouse point
 	

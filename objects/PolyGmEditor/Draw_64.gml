@@ -14,7 +14,7 @@ hover_on_button = false;
 switch state
 {
 	case EDITOR_STATES.EDIT:
-		var _b = new Button("Mode = EDIT");
+		var _b = new Button("Mode: EDIT");
 		_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
 		_b.Draw();
 		if _b.Pressed()
@@ -82,6 +82,40 @@ switch state
 			}
 			i++; if _b.Hover() hover_on_button = true;
 			
+			var _b = new Button("Flip shape horizontally");
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				with shape_selected
+				{
+					for (var i = 0; i < array_length(array); i++;)
+					{
+				        array[i].x = x - (array[i].x - x);
+				    }
+					array = array_reverse(array);
+					ArrayUpdate();	
+				}
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Flip shape vertically");
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				with shape_selected
+				{
+					for (var i = 0; i < array_length(array); i++;)
+					{
+				        array[i].y = y - (array[i].y - y);
+				    }
+					array = array_reverse(array);
+					ArrayUpdate();	
+				}
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
 			var _b = new Button("Change sprite");
 			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
 			_b.Draw();
@@ -111,14 +145,14 @@ switch state
 						get_integer("Green (0 - 255):", 0),
 						get_integer("Blue (0 - 255):", 0)
 					);
-					alpha = get_integer("Alpa (0 - 255):", 0);
+					alpha = get_integer("Alpha (0 - 255):", 0);
 				}
 			}
 			i++; if _b.Hover() hover_on_button = true;
 		}
 		break;
 	case EDITOR_STATES.DRAW:
-		var _b = new Button("Mode = DRAW");
+		var _b = new Button("Mode: DRAW");
 		_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
 		_b.Draw();
 		if _b.Pressed()
@@ -127,7 +161,9 @@ switch state
 		}
 		i++; if _b.Hover() hover_on_button = true;
 	
-		var _b = new Button("Auto draw = " + string(auto_draw));
+		var _str = "Freehand: " + string(auto_draw);
+		if auto_draw == 0 _str = "Point-by-point"
+		var _b = new Button(_str);
 		_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
 		_b.Draw();
 		if _b.Pressed()
@@ -161,4 +197,4 @@ if global.info_text
 	draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid");
 }
 
-draw_sprite(spr_cursor, -1, global.bb_mousex, global.bb_mousey);
+draw_sprite(spr_cursor, -1, mouse_xc, mouse_yc);

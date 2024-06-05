@@ -2,13 +2,9 @@
 
 #region Snap mouse to grid
 
-mouse_xc = mouse_x;
-mouse_yc = mouse_y;
-if keyboard_check(vk_lshift)
-{
-	mouse_xc = floor(mouse_x / 32) * 32;	
-	mouse_yc = floor(mouse_y / 32) * 32;
-}
+var _s = keyboard_check(vk_lshift) ? global.grid_size : 1;
+mouse_xc = floor(mouse_x / _s) * _s;
+mouse_yc = floor(mouse_y / _s) * _s;
 
 #endregion
 

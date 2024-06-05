@@ -13,7 +13,7 @@ function PolygonToTriangles(_polygon)
 		array_push(_poly_x, _polygon[_point].x);
 		array_push(_poly_y, _polygon[_point].y);
 	}
-
+	
 	// 1. For (_n - 3) vertices
 	_n = _polygon_size;
 	for (_n = _polygon_size; _n > 3; _n -= 1)

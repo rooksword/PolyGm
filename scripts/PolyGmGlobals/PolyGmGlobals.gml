@@ -27,3 +27,11 @@ global.auto_draw_circles = true;
 // Draw info text
 
 global.info_text = true;
+
+// Grid size (for snapping the mouse to the grid)
+
+global.grid_size = 64;
+
+// Directory for save files (by default in your local app data)
+
+global.save_directory = "";

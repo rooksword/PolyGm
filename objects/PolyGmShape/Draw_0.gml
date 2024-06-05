@@ -46,6 +46,9 @@ if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
 			draw_set_colour(c_lime);
 			draw_rectangle(mouse_point.x - global.point_size, mouse_point.y - global.point_size, mouse_point.x + global.point_size, mouse_point.y + global.point_size, false);
 		}
+		
+		draw_set_colour(c_white);
+		draw_text(_point.x, _point.y, i);
 	}
 	
 	if !drawing
