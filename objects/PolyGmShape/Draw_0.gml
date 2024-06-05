@@ -4,23 +4,41 @@ var _selected = PolyGmEditor.shape_selected == id;
 
 if vbuff_empty == false
 {
-	var _darken = (mouse_over_shape and !_selected) or (hover_shape and moving_point == -1);
-	if _darken shader_set(sh_darken);
+	var _darken = ((mouse_over_shape and !_selected) or (hover_shape and moving_point == -1)) * 0.33;
+	shader_set(sh_colour);
+	shader_set_uniform_f_array(shader_get_uniform(sh_colour, "colour"), [
+		colour_get_red(colour)   / 255 - _darken,
+		colour_get_green(colour) / 255 - _darken,
+		colour_get_blue(colour)  / 255 - _darken, alpha / 255]);
 	vertex_submit(vbuff, pr_trianglelist, texture);
-	if _darken shader_reset();
+	shader_reset();
 }
 
-if drawing or _selected
+if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
 {
 	#region Debug
 	
 	for (var i = 0; i < array_length(array); i++;)
 	{
 		var _point = array[i];
-	
+		
 		draw_set_colour(c_white);
+		if drawing and i < array_length(array) - 1
+		{
+			draw_line(_point.x, _point.y, array[i + 1].x, array[i + 1].y);	
+		}
+		
 		if hover_point == _point draw_set_colour(c_aqua);
-		draw_rectangle(_point.x - point_size, _point.y - point_size, _point.x + point_size, _point.y + point_size, false);
+		//if nearest_point0 == _point draw_set_colour(c_red);
+		//if nearest_point1 == _point draw_set_colour(c_orange);
+		
+		draw_rectangle(_point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size, false);
+		if drawing and global.auto_draw_circles
+		{
+			draw_set_alpha(0.25);
+			draw_circle(_point.x, _point.y, PolyGmEditor.auto_draw, true);
+			draw_set_alpha(1);
+		}
 	
 		if hover_point == -1 and mouse_point != -1
 		{
@@ -28,23 +46,22 @@ if drawing or _selected
 			draw_line_width(nearest_point0.x, nearest_point0.y, nearest_point1.x, nearest_point1.y, 2);
 			
 			draw_set_colour(c_lime);
-			draw_rectangle(mouse_point.x - point_size, mouse_point.y - point_size, mouse_point.x + point_size, mouse_point.y + point_size, false);
+			draw_rectangle(mouse_point.x - global.point_size, mouse_point.y - global.point_size, mouse_point.x + global.point_size, mouse_point.y + global.point_size, false);
 		}
+		
+		//draw_text(_point.x, _point.y, i);
 	}
 	
-	draw_set_colour(c_orange);
-	draw_line(left,  top,    right, top);
-	draw_line(left,  bottom, right, bottom);
-	draw_line(left,  top,    left,  bottom);
-	draw_line(right, top,    right, bottom);
-	
-	var _letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
-	for (var i = 0; i < array_length(handles); i++;)
+	if !drawing
 	{
-		draw_set_colour(hover_handle == i ? c_red : c_orange);
-		draw_circle(handles[i].x, handles[i].y, handle_size, false);
-		draw_set_colour(c_white);
-		draw_text(handles[i].x, handles[i].y, string(i));
+		draw_set_colour(c_orange);
+		draw_rectangle(left, top, right, bottom, true);
+	
+		for (var i = 0; i < array_length(handles); i++;)
+		{
+			draw_set_colour(hover_handle == i ? c_red : c_orange);
+			draw_circle(handles[i].x, handles[i].y, handle_size, false);
+		}
 	}
 	
 	#endregion

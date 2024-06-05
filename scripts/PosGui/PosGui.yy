@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PosGui",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PosGui",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

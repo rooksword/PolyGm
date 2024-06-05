@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"DistancePointToSegment",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"DistancePointToSegment",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

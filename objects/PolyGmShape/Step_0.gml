@@ -10,20 +10,35 @@ if drawing
 	
 	// New point
 	
+	var _dist = point_distance(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _last_point.x, _last_point.y);
 	if (PolyGmEditor.auto_draw == 0 and mouse_check_button_pressed(mb_left))
-	or (PolyGmEditor.auto_draw > 0 and point_distance(mouse_x, mouse_y, _last_point.x, _last_point.y) > PolyGmEditor.auto_draw)
+	or (PolyGmEditor.auto_draw > 0 and (_dist > PolyGmEditor.auto_draw or (keyboard_check(vk_lshift) and (PolyGmEditor.mouse_xc != PolyGmEditor.mouse_xprevious or PolyGmEditor.mouse_yc != PolyGmEditor.mouse_yprevious))))
 	{
-		array_push(array, new Vec2(mouse_x, mouse_y));
+		array_push(array, new Vec2(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc));
 	}
 	
 	// Finish shape
 	
 	if _len > 2 // Not first point
-	and point_distance(mouse_x, mouse_y, _first_point.x, _first_point.y) < (PolyGmEditor.auto_draw == 0 ? 32 : PolyGmEditor.auto_draw) // Close to first point
+	and point_distance(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _first_point.x, _first_point.y) < (PolyGmEditor.auto_draw == 0 ? 32 : PolyGmEditor.auto_draw) // Close to first point
 	{
 		drawing = false; // Stop drawing shape
 		
 		if PolygonIsCounterclockwise(array) array = array_reverse(array); // Reverse shape if not clockwise
+		
+		right  = array[0].x;
+		left   = array[0].x;
+		top    = array[0].y;
+		bottom = array[0].y;
+		
+		for (var i = 0; i < _len; i++;)
+		{
+			var _point = array[i];
+			if _point.x < left   left   = _point.x;
+			if _point.x > right  right  = _point.x;
+			if _point.y < top    top    = _point.y;
+			if _point.y > bottom bottom = _point.y;
+		}
 		
 		ArrayUpdate();
 		vbuff_empty = false;
@@ -32,15 +47,15 @@ if drawing
 
 #endregion
 
-if vbuff_empty == false
+if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 {
-	if mouse_x != PolyGmEditor.mouse_xprevious
-	or mouse_y != PolyGmEditor.mouse_yprevious
-	{
-		mouse_over_shape = PointInPolygon(mouse_x, mouse_y, array_tri);	
-	}
-	
 	PolygonUpdate();
+	
+	if PolyGmEditor.mouse_xc != PolyGmEditor.mouse_xprevious
+	or PolyGmEditor.mouse_yc != PolyGmEditor.mouse_yprevious
+	{
+		mouse_over_shape = PointInPolygon(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, array_tri);	
+	}
 	
 	if mouse_over_shape and mouse_check_button_pressed(mb_left)
 	{
@@ -59,11 +74,31 @@ if vbuff_empty == false
 			{
 				moving_point = hover_point;	
 			}
-			else if mouse_point != -1
+			else if mouse_point != -1 // Insert point
 			{
-				var _index = nearest_point0_index > nearest_point1_index ? nearest_point0_index : nearest_point1_index;
-				array_insert(array, _index, mouse_point);
-				moving_point = array[_index];
+				var _index = (nearest_point0_index > nearest_point1_index) ? nearest_point1_index + 1 : nearest_point0_index + 1;
+				
+				show_debug_message(nearest_point0_index);
+				
+				if nearest_point0_index == 0
+				{
+					if nearest_point1_index == 1
+					{
+						array_insert(array, 1, mouse_point);
+						moving_point = array[1];
+					}
+					else
+					{
+						array_push(array, mouse_point);
+						moving_point = mouse_point;
+					}
+				}
+				else
+				{
+					array_insert(array, _index, mouse_point);
+					moving_point = array[_index];
+				}
+				
 				ArrayUpdate();
 			}
 			else if hover_shape
@@ -90,12 +125,10 @@ if vbuff_empty == false
 			var _m = [4, 5, 6, 7, 0, 1, 2, 3];
 			var _o = _m[moving_handle];
 		
-			show_debug_message(string(moving_handle) + ", " + string(_o));
-		
 			var _x0 = handles_real[moving_handle].x - handles_real[_o].x;
 			var _y0 = handles_real[moving_handle].y - handles_real[_o].y;
-			var _x1 = (mouse_x > right ? mouse_x - 16 : mouse_x + 16) - handles_real[_o].x;
-			var _y1 = (mouse_y > bottom ? mouse_y - 16 : mouse_y + 16) - handles_real[_o].y;
+			var _x1 = (PolyGmEditor.mouse_xc > right ? PolyGmEditor.mouse_xc - 16 : PolyGmEditor.mouse_xc + 16) - handles_real[_o].x;
+			var _y1 = (PolyGmEditor.mouse_yc > bottom ? PolyGmEditor.mouse_yc - 16 : PolyGmEditor.mouse_yc + 16) - handles_real[_o].y;
 		
 			for (var i = 0; i < array_length(array); i++;)
 			{
@@ -120,7 +153,7 @@ if vbuff_empty == false
 		}
 		else if moving_point != -1 // Move point
 		{
-			moving_point.Add(new Vec2(mouse_x - PolyGmEditor.mouse_xprevious, mouse_y - PolyGmEditor.mouse_yprevious));
+			moving_point.Add(new Vec2(PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious));
 			ArrayUpdate();
 
 			if mouse_check_button_released(mb_left)
@@ -133,7 +166,7 @@ if vbuff_empty == false
 			for (var i = 0; i < array_length(array); i++;)
 			{
 				var _p = array[i];
-				_p.Add(new Vec2(mouse_x - PolyGmEditor.mouse_xprevious, mouse_y - PolyGmEditor.mouse_yprevious)); 
+				_p.Add(new Vec2(PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious)); 
 			}
 			ArrayUpdate();
 	

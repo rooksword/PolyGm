@@ -18,9 +18,40 @@ function PolygonUpdate()
 	var _ysum = 0;
 	var _len = array_length(array);
 	
+	var _min_distance = infinity;
+	
 	for (var i = 0; i < _len; i++;)
 	{
 		var _point = array[i];
+		
+		#region Nearest line
+		
+		var _mx = PolyGmEditor.mouse_xc;
+		var _my = PolyGmEditor.mouse_yc;
+		var _index = (i + 1) mod _len;
+		var _q = array[_index];
+		
+		var _distance = DistancePointToSegment(_mx, _my, _point.x, _point.y, _q.x, _q.y);
+		if _distance < _min_distance
+		{
+			_min_distance = _distance;
+			if point_distance(_mx, _my, _point.x, _point.y) < point_distance(_mx, _my, _q.x, _q.y)
+			{
+				nearest_point0 = _point;
+				nearest_point0_index = i;
+				nearest_point1 = _q;
+				nearest_point1_index = _index;
+			}
+			else
+			{
+				nearest_point0 = _q;
+				nearest_point0_index = _index;
+				nearest_point1 = _point;
+				nearest_point1_index = i;
+			}
+		}
+		
+		#endregion
 		
 		#region Set bounding box
 		
@@ -34,35 +65,10 @@ function PolygonUpdate()
 		_xsum += _point.x;
 		_ysum += _point.y;
 		
-		if point_in_rectangle(mouse_x, mouse_y, _point.x - point_size, _point.y - point_size, _point.x + point_size, _point.y + point_size)
+		if point_in_rectangle(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size)
 		{
 			hover_point = _point;	
 		}
-		
-		var _p = array[i];
-		var _d0 = point_distance(mouse_x, mouse_y, nearest_point0.x, nearest_point0.y);
-		var _d1 = point_distance(mouse_x, mouse_y, _p.x,             _p.y);
-		if _d1 < _d0
-		{
-			nearest_point0 = array[i];
-			nearest_point0_index = i;
-		}
-	}
-	
-	var _next = nearest_point0_index < array_length(array) - 1 ? nearest_point0_index + 1 : 0;
-	var _prev = nearest_point0_index > 0 ? nearest_point0_index - 1 : array_length(array) - 1;
-	var _a = array[_next];
-	var _b = array[_prev];
-	
-	if point_distance(mouse_x, mouse_y, _a.x, _a.y) < point_distance(mouse_x, mouse_y, _b.x, _b.y)
-	{
-		nearest_point1 = _a;
-		nearest_point1_index = _next;
-	}
-	else
-	{
-		nearest_point1 = _b;
-		nearest_point1_index = _prev;
 	}
 	
 	x = _xsum / _len;
@@ -73,7 +79,7 @@ function PolygonUpdate()
 	hover_handle = -1;
 	for (var i = 0; i < array_length(handles); i++;)
 	{
-		if point_in_circle(mouse_x, mouse_y, handles[i].x, handles[i].y, handle_size) hover_handle = i;	
+		if point_in_circle(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, handles[i].x, handles[i].y, global.handle_size) hover_handle = i;	
 	}
 
 	hover_shape =
@@ -84,7 +90,7 @@ function PolygonUpdate()
 
 	#region Mouse point
 	
-	var _numerator = abs((nearest_point1.y - nearest_point0.y) * mouse_x - (nearest_point1.x - nearest_point0.x) * mouse_y + nearest_point1.x * nearest_point0.y - nearest_point1.y * nearest_point0.x);
+	var _numerator = abs((nearest_point1.y - nearest_point0.y) * PolyGmEditor.mouse_xc - (nearest_point1.x - nearest_point0.x) * PolyGmEditor.mouse_yc + nearest_point1.x * nearest_point0.y - nearest_point1.y * nearest_point0.x);
 	var _denominator = sqrt(sqr(nearest_point1.y - nearest_point0.y) + sqr(nearest_point1.x - nearest_point0.x));
 	distance_to_nearest_line = _numerator / _denominator;
 		
@@ -96,7 +102,7 @@ function PolygonUpdate()
 	}
 	else
 	{
-		var _t = ((mouse_x - nearest_point1.x) * _dx + (mouse_y - nearest_point1.y) * _dy) / (_dx * _dx + _dy * _dy)
+		var _t = ((PolyGmEditor.mouse_xc - nearest_point1.x) * _dx + (PolyGmEditor.mouse_yc - nearest_point1.y) * _dy) / (_dx * _dx + _dy * _dy)
 		mouse_point = new Vec2(nearest_point1.x + _t * _dx, nearest_point1.y + _t * _dy);
 	}
 	

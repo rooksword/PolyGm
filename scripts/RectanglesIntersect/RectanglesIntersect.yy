@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"RectanglesIntersect",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"RectanglesIntersect",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

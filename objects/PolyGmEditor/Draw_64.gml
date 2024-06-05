@@ -1,7 +1,7 @@
 /// @desc Draw GUI
 
-global.bb_mousex = device_mouse_x_to_gui(0);
-global.bb_mousey = device_mouse_y_to_gui(0);
+global.bb_mousex = PosGui(mouse_xc, mouse_yc)[0];
+global.bb_mousey = PosGui(mouse_xc, mouse_yc)[1];
 
 draw_set_halign(fa_left);
 draw_set_valign(fa_top);
@@ -81,6 +81,40 @@ switch state
 				}
 			}
 			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Change sprite");
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				with shape_selected
+				{
+					if spr_index < array_length(global.textures) - 1 spr_index++;
+					else spr_index = 0;
+					sprite = global.textures[spr_index];
+					texture = sprite_get_texture(sprite, frame);
+					uvs     = sprite_get_uvs(sprite, frame);
+					ArrayUpdate();
+				}
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Change colour");
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				with shape_selected
+				{
+					colour = make_color_rgb(
+						get_integer("Red (0 - 255):", 0),
+						get_integer("Green (0 - 255):", 0),
+						get_integer("Blue (0 - 255):", 0)
+					);
+					alpha = get_integer("Alpa (0 - 255):", 0);
+				}
+			}
+			i++; if _b.Hover() hover_on_button = true;
 		}
 		break;
 	case EDITOR_STATES.DRAW:
@@ -118,3 +152,10 @@ and mouse_check_button_pressed(mb_left) // LMB pressed
 {
 	shape_selected = -1;	
 }
+
+draw_set_colour(c_white);
+draw_set_halign(fa_left);
+draw_set_valign(fa_bottom);
+draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid");
+
+draw_sprite(spr_cursor, -1, global.bb_mousex, global.bb_mousey);

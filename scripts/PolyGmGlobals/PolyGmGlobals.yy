@@ -1,0 +1,13 @@
+{
+  "$GMScript":"",
+  "%Name":"PolyGmGlobals",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"PolyGmGlobals",
+  "parent":{
+    "name":"PolyGM",
+    "path":"PolyGM.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

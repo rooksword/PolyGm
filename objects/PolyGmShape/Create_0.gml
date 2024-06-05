@@ -17,8 +17,9 @@ mouse_over_shape = false;
 #region Drawing
 
 drawing = true;
-point_size = 4;
-handle_size = 8;
+
+colour = c_white;
+alpha = 255;
 
 right = 0;
 left = 0;
@@ -72,7 +73,8 @@ distance_to_nearest_line_min = 16;
 
 #region Texture
 
-sprite  = spr_rock;
+spr_index = 0;
+sprite  = global.textures[spr_index];
 frame   = 0;
 texture = sprite_get_texture(sprite, frame);
 uvs     = sprite_get_uvs(sprite, frame);
@@ -95,7 +97,7 @@ vbuff_empty = true;
 
 #region Array
 
-array = [new Vec2(mouse_x, mouse_y)];
+array = [new Vec2(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc)];
 array_tri = [];
 
 #endregion

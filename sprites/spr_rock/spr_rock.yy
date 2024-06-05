@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":4,
   "parent":{
-    "name":"PolyGM",
-    "path":"PolyGM.yyp",
+    "name":"Demo",
+    "path":"folders/Demo.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

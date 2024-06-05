@@ -1,13 +1,13 @@
 {
   "$GMRoom":"",
-  "%Name":"rm_test",
+  "%Name":"rm_demo",
   "creationCodeFile":"",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
   "instanceCreationOrder":[
-    {"name":"inst_5721B282","path":"rooms/rm_test/rm_test.yy",},
-    {"name":"inst_4C6C4C13","path":"rooms/rm_test/rm_test.yy",},
+    {"name":"inst_5721B282","path":"rooms/rm_demo/rm_demo.yy",},
+    {"name":"inst_4C6C4C13","path":"rooms/rm_demo/rm_demo.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -17,10 +17,10 @@
       ],"layers":[],"name":"Instances","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRBackgroundLayer":"","%Name":"Background","animationFPS":30.0,"animationSpeedType":0,"colour":4294967295,"depth":100,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"hspeed":0.0,"htiled":true,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"layers":[],"name":"Background","properties":[],"resourceType":"GMRBackgroundLayer","resourceVersion":"2.0","spriteId":{"name":"spr_grid","path":"sprites/spr_grid/spr_grid.yy",},"stretch":false,"userdefinedAnimFPS":true,"userdefinedDepth":false,"visible":true,"vspeed":0.0,"vtiled":true,"x":0,"y":0,},
   ],
-  "name":"rm_test",
+  "name":"rm_demo",
   "parent":{
-    "name":"PolyGM",
-    "path":"PolyGM.yyp",
+    "name":"Demo",
+    "path":"folders/Demo.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

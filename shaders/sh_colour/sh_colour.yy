@@ -1,7 +1,7 @@
 {
   "$GMShader":"",
-  "%Name":"sh_darken",
-  "name":"sh_darken",
+  "%Name":"sh_colour",
+  "name":"sh_colour",
   "parent":{
     "name":"PolyGM",
     "path":"PolyGM.yyp",
