@@ -29,10 +29,8 @@ if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
 		}
 		
 		if hover_point == _point draw_set_colour(c_aqua);
-		//if nearest_point0 == _point draw_set_colour(c_red);
-		//if nearest_point1 == _point draw_set_colour(c_orange);
-		
 		draw_rectangle(_point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size, false);
+		
 		if drawing and global.auto_draw_circles
 		{
 			draw_set_alpha(0.25);
@@ -48,8 +46,6 @@ if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
 			draw_set_colour(c_lime);
 			draw_rectangle(mouse_point.x - global.point_size, mouse_point.y - global.point_size, mouse_point.x + global.point_size, mouse_point.y + global.point_size, false);
 		}
-		
-		//draw_text(_point.x, _point.y, i);
 	}
 	
 	if !drawing
@@ -60,7 +56,7 @@ if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
 		for (var i = 0; i < array_length(handles); i++;)
 		{
 			draw_set_colour(hover_handle == i ? c_red : c_orange);
-			draw_circle(handles[i].x, handles[i].y, handle_size, false);
+			draw_circle(handles[i].x, handles[i].y, global.handle_size, false);
 		}
 	}
 	

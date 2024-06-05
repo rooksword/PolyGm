@@ -153,9 +153,12 @@ and mouse_check_button_pressed(mb_left) // LMB pressed
 	shape_selected = -1;	
 }
 
-draw_set_colour(c_white);
-draw_set_halign(fa_left);
-draw_set_valign(fa_bottom);
-draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid");
+if global.info_text
+{
+	draw_set_colour(c_white);
+	draw_set_halign(fa_left);
+	draw_set_valign(fa_bottom);
+	draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid");
+}
 
 draw_sprite(spr_cursor, -1, global.bb_mousex, global.bb_mousey);
