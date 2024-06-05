@@ -197,4 +197,4 @@ if global.info_text
 	draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid");
 }
 
-draw_sprite(spr_cursor, -1, mouse_xc, mouse_yc);
+draw_sprite(spr_cursor, -1, global.bb_mousex, global.bb_mousey);
