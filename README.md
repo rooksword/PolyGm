@@ -1,4 +1,4 @@
-# PolyGM
+# PolyGm
 
 <p align="center">A polygon-based runtime room editor for GameMaker.</p>
 
