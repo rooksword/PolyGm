@@ -2,6 +2,8 @@
 
 #region Save polygons
 
+instance_activate_object(PolyGmShape);
+
 var _saveData = [];
 
 for (var i = 0; i < instance_number(PolyGmShape); i++;)
