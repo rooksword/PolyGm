@@ -26,7 +26,7 @@
   "origin":4,
   "parent":{
     "name":"Demo",
-    "path":"folders/Demo.yy",
+    "path":"folders/PolyGm/Demo.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

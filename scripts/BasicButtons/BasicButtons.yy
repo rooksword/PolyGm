@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"BasicButtons",
   "parent":{
-    "name":"PolyGM",
-    "path":"PolyGM.yyp",
+    "name":"Edit at risk",
+    "path":"folders/PolyGm/Edit at risk.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

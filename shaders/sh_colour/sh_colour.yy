@@ -3,8 +3,8 @@
   "%Name":"sh_colour",
   "name":"sh_colour",
   "parent":{
-    "name":"PolyGM",
-    "path":"PolyGM.yyp",
+    "name":"Edit at risk",
+    "path":"folders/PolyGm/Edit at risk.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

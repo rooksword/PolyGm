@@ -9,8 +9,8 @@
   "name":"PolyGmSave",
   "overriddenProperties":[],
   "parent":{
-    "name":"PolyGM",
-    "path":"PolyGM.yyp",
+    "name":"Edit at risk",
+    "path":"folders/PolyGm/Edit at risk.yy",
   },
   "parentObjectId":null,
   "persistent":true,

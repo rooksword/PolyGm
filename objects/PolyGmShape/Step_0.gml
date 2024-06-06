@@ -78,8 +78,6 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 			{
 				var _index = (nearest_point0_index > nearest_point1_index) ? nearest_point1_index + 1 : nearest_point0_index + 1;
 				
-				show_debug_message(nearest_point0_index);
-				
 				if nearest_point0_index == 0
 				{
 					if nearest_point1_index == 1 array_insert(array, 1, mouse_point);

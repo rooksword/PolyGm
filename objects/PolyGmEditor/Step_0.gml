@@ -52,5 +52,3 @@ with PolyGmShape
 		instance_deactivate_object(id);	
 	}
 }
-
-show_debug_message(instance_number(PolyGmShape));

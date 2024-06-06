@@ -20,7 +20,7 @@
   "name":"rm_demo",
   "parent":{
     "name":"Demo",
-    "path":"folders/Demo.yy",
+    "path":"folders/PolyGm/Demo.yy",
   },
   "parentRoom":null,
   "physicsSettings":{
