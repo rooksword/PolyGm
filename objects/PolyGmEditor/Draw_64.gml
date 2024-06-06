@@ -42,7 +42,7 @@ function PolyGmEditorDrawGUI()
 				_b.Draw();
 				if _b.Pressed()
 				{
-					var _new_shape = instance_create_layer(0, 0, "Instances", PolyGmShape);	
+					var _new_shape = instance_create_layer(0, 0, shape_selected.layer, PolyGmShape);	
 					_new_shape.array = [];
 					for (var j = 0; j < array_length(shape_selected.array); j++;)
 					{
@@ -51,6 +51,10 @@ function PolyGmEditorDrawGUI()
 					}
 					with _new_shape
 					{
+						sprite  = other.shape_selected.sprite;
+						texture = sprite_get_texture(sprite, frame);
+						uvs     = sprite_get_uvs(sprite, frame);
+						
 						drawing = false;
 						for (var j = 0; j < array_length(array); j++;)
 						{
@@ -174,6 +178,23 @@ function PolyGmEditorDrawGUI()
 				else auto_draw = 0;
 			}
 			i++; if _b.Hover() hover_on_button = true;
+			
+			_str = "Layer:" + string(layer_get_name(layers[layer_index]));
+			var _b = new Button(_str);
+			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.Draw();
+			if _b.Pressed()
+			{
+				if layer_index < array_length(layers) - 1 layer_index++;
+				else layer_index = 0;
+			}
+			if _b.PressedR()
+			{
+				if layer_index > 0 layer_index--;
+				else layer_index = array_length(layers) - 1;
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
 			break;
 	}
 

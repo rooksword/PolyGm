@@ -29,8 +29,11 @@ switch state
 		
 		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
 		{
-			instance_create_layer(mouse_xc, mouse_yc, "Instances", PolyGmShape);	
+			instance_create_layer(mouse_xc, mouse_yc, layers[layer_index], PolyGmShape);	
 		}
+		
+		layers = layer_get_all();
+		
 		break;
 }
 

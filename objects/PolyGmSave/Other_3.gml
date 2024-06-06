@@ -13,7 +13,8 @@ for (var i = 0; i < instance_number(PolyGmShape); i++;)
 		array: _inst.array,
 		sprite: _inst.sprite,
 		colour: _inst.colour,
-		alpha: _inst.alpha
+		alpha: _inst.alpha,
+		layer: _inst.layer
 	};
 	array_push(_saveData, _saveEntity);
 }

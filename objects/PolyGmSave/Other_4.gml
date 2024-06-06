@@ -1,6 +1,6 @@
 /// @desc Create save file
 
-instance_create_layer(0, 0, "Instances", PolyGmEditor);
+instance_create_layer(0, 0, "Top", PolyGmEditor);
 	
 if file_exists(global.save_directory + "polygons.sav")
 {
@@ -13,7 +13,7 @@ if file_exists(global.save_directory + "polygons.sav")
 	while array_length(_load_data) > 0
 	{
 		var _load_entity = array_pop(_load_data);
-		var _inst = instance_create_layer(0, 0, "Instances", PolyGmShape);
+		var _inst = instance_create_layer(0, 0, _load_entity.layer, PolyGmShape);
 		with _inst
 		{
 			drawing = false;

@@ -21,3 +21,6 @@ mouse_xc = mouse_x;         // Current mouse_x (can be snapped)
 mouse_yc = mouse_y;         // Current mouse_y (can be snapped)
 mouse_xprevious = mouse_x;  // Previous mouse_x (can be snapped)
 mouse_yprevious = mouse_y;  // Previous mouse_y (can be snapped)
+
+layers = layer_get_all();
+layer_index = 0;
