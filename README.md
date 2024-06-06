@@ -8,9 +8,10 @@
 
 - Draw polygons freehand or point-by-point
 - Move polygons and individual points
-- Rotate and scale polygons
+- Rotate, scale and flip polygons
 - Duplicate and delete polygons
 - Edit texture, colour and alpha of polygons
+- Save and load in .json format
 - Easy to setup and intuitive user interface
 
 Start by reading through the <a href = "https://github.com/rooksword/PolyGM/wiki">wiki</a>.
