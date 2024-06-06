@@ -9,8 +9,8 @@
   "name":"PolyGmCamera",
   "overriddenProperties":[],
   "parent":{
-    "name":"Edit at risk",
-    "path":"folders/PolyGm/Edit at risk.yy",
+    "name":"Demo",
+    "path":"folders/PolyGm/Demo.yy",
   },
   "parentObjectId":null,
   "persistent":false,

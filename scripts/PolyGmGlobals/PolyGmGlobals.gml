@@ -35,3 +35,7 @@ global.grid_size = 64;
 // Directory for save files (by default in your local app data)
 
 global.save_directory = "";
+
+// If true, PolyGmEditor draws to GUI. If false, call PolyGmEditorDrawGUI() function in whichever 'Draw GUI' event you want
+
+global.draw_editor = true;
