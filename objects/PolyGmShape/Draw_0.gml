@@ -14,7 +14,34 @@ if vbuff_empty == false
 	shader_reset();
 }
 
-if drawing or (_selected and PolyGmEditor.state = EDITOR_STATES.EDIT)
+if PolyGmEditor.state == EDITOR_STATES.SELECT
+{
+	for (var i = 0; i < array_length(array); i++;)
+	{
+		var _point = array[i];
+		draw_set_colour(c_white);
+		if InArray(_point, PolyGmEditor.select_array)
+		{
+			draw_set_colour(c_blue);	
+		}
+		draw_rectangle(_point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size, false);
+	}
+}
+
+if PolyGmEditor.state == EDITOR_STATES.EDIT_SELECT
+{
+	for (var i = 0; i < array_length(array); i++;)
+	{
+		var _point = array[i];
+		if InArray(_point, PolyGmEditor.select_array)
+		{
+			draw_set_colour(c_blue);	
+			draw_rectangle(_point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size, false);
+		}
+	}
+}
+
+if drawing or (_selected and PolyGmEditor.state == EDITOR_STATES.EDIT)
 {
 	#region Debug
 	

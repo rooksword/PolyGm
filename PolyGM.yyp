@@ -32,6 +32,7 @@
     {"id":{"name":"ArrayUpdate","path":"scripts/ArrayUpdate/ArrayUpdate.yy",},},
     {"id":{"name":"BasicButtons","path":"scripts/BasicButtons/BasicButtons.yy",},},
     {"id":{"name":"DistancePointToSegment","path":"scripts/DistancePointToSegment/DistancePointToSegment.yy",},},
+    {"id":{"name":"InArray","path":"scripts/InArray/InArray.yy",},},
     {"id":{"name":"LinesIntersect","path":"scripts/LinesIntersect/LinesIntersect.yy",},},
     {"id":{"name":"PointInPolygon","path":"scripts/PointInPolygon/PointInPolygon.yy",},},
     {"id":{"name":"PolyGmGlobals","path":"scripts/PolyGmGlobals/PolyGmGlobals.yy",},},

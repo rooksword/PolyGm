@@ -57,11 +57,6 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 		mouse_over_shape = PointInPolygon(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, array_tri);	
 	}
 	
-	if mouse_over_shape and mouse_check_button_pressed(mb_left)
-	{
-		PolyGmEditor.shape_selected = id;	
-	}
-	
 	if PolyGmEditor.shape_selected == id
 	{		
 		if mouse_check_button_pressed(mb_left) // Set moving to hover

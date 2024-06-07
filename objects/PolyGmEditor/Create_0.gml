@@ -6,8 +6,10 @@ gpu_set_texrepeat(true);    // Set all textures to repeat infinitely
 						    
 enum EDITOR_STATES          // States control what buttons and actions are available
 {						    
-	EDIT,				    
-	DRAW				    
+	EDIT,			    
+	DRAW,
+	SELECT,
+	EDIT_SELECT
 }						    
 						    
 state = EDITOR_STATES.EDIT; // Set the default state to 'edit'
@@ -24,3 +26,6 @@ mouse_yprevious = mouse_y;  // Previous mouse_y (can be snapped)
 
 layers = layer_get_all();
 layer_index = 0;
+
+select_array = [];
+selection = [];
