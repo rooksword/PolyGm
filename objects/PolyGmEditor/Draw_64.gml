@@ -2,33 +2,120 @@
 
 function PolyGmEditorDrawGUI()
 {
+	if keyboard_check(vk_lshift) draw_sprite_tiled_ext(spr_grid, -1, 0, 0, global.grid_size / sprite_get_width(spr_grid), global.grid_size / sprite_get_height(spr_grid), c_white, 0.1);
+	
 	global.bb_mousex = PosGui(mouse_xc, mouse_yc)[0];
 	global.bb_mousey = PosGui(mouse_xc, mouse_yc)[1];
 
 	draw_set_halign(fa_left);
 	draw_set_valign(fa_top);
 
-	var _y = 48;
+	var _h = string_height("Test");
+	var _y = (_h + global.bb_padding * 2) + 2;
 	var i = 0;
 
 	hover_on_button = false;
-
+	
+	var _mode = "Edit";
+	if state == EDITOR_STATES.DRAW _mode = "Draw";
+	
+	var _b = new Button("Mode: " + _mode);
+	_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+	_b.Draw();
+	if _b.Pressed()
+	{
+		if state == EDITOR_STATES.EDIT state = EDITOR_STATES.DRAW;
+		else state = EDITOR_STATES.EDIT;
+	}
+	i++; if _b.Hover() hover_on_button = true;
+	
+	var _l0 = new Button("Layer:" + string(layer_get_name(layers[layer_index])));
+	_l0.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l0.text), _h);
+	_l0.Draw();
+	if _l0.Pressed()
+	{
+		if layer_index < array_length(layers) - 1 layer_index++;
+		else layer_index = 0;
+	}
+	if _l0.PressedR()
+	{
+		if layer_index > 0 layer_index--;
+		else layer_index = array_length(layers) - 1;
+	}
+	i++;
+	if _l0.Hover() hover_on_button = true;
+	
+	var _l1 = new Button(layer_get_visible(layers[layer_index]) ? "Hide layer" : "Show layer");
+	_l1.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l1.text), _h);
+	_l1.Draw();
+	if _l1.Pressed()
+	{
+		var _lay_id = layers[layer_index];
+		if (layer_get_visible(_lay_id))
+		{
+			layer_set_visible(_lay_id, false);
+		}
+		else
+		{
+			layer_set_visible(_lay_id, true);
+		}
+	}
+	i++; if _l1.Hover() hover_on_button = true;
+	
+	var _locked = InArray(layers[layer_index], layers_locked);
+	var _str = "Layer:" + string(
+			_locked ? "Unlock" : "Lock"
+		);
+	var _l2 = new Button(_str);
+	_l2.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l2.text), _h);
+	_l2.Draw();
+	if _l2.Pressed()
+	{
+		if _locked
+		{
+			var _f = function(_element)
+			{
+			    return (_element == layers[layer_index]);
+			}
+			var _index = array_find_index(layers_locked, _f);
+			array_delete(layers_locked, _index, 1);
+		}
+		else
+		{
+			array_push(layers_locked, layers[layer_index]);	
+		}
+	}
+	i++; if _l2.Hover() hover_on_button = true;
+	
+	if _l0.Hover()
+	or _l1.Hover()
+	or _l2.Hover()
+	{
+		with PolyGmShape
+		{
+			if other.layers[other.layer_index] != layer
+			{
+				layer_hover = 0.25;
+			}
+			else
+			{
+				layer_hover = 1;	
+			}
+		}
+		hover_on_button = true;
+	}
+	else
+	{
+		with PolyGmShape layer_hover = 1;	
+	}
+	
 	switch state
 	{
 		case EDITOR_STATES.EDIT:
-			var _b = new Button("Mode: EDIT");
-			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
-			_b.Draw();
-			if _b.Pressed()
-			{
-				state = EDITOR_STATES.DRAW;	
-			}
-			i++; if _b.Hover() hover_on_button = true;
-		
 			if shape_selected != -1
 			{
 				var _b = new Button("Delete shape");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -38,7 +125,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Duplicate shape");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -69,7 +156,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Rotate shape");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Down()
 				{
@@ -89,7 +176,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Flip shape horizontally");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -106,7 +193,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Flip shape vertically");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -123,7 +210,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Change sprite");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -140,7 +227,7 @@ function PolyGmEditorDrawGUI()
 				i++; if _b.Hover() hover_on_button = true;
 			
 				var _b = new Button("Change colour");
-				_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 				_b.Draw();
 				if _b.Pressed()
 				{
@@ -158,40 +245,15 @@ function PolyGmEditorDrawGUI()
 			}
 			break;
 		case EDITOR_STATES.DRAW:
-			var _b = new Button("Mode: DRAW");
-			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
-			_b.Draw();
-			if _b.Pressed()
-			{
-				state = EDITOR_STATES.EDIT;	
-			}
-			i++; if _b.Hover() hover_on_button = true;
-	
 			var _str = "Freehand: " + string(auto_draw);
 			if auto_draw == 0 _str = "Point-by-point"
 			var _b = new Button(_str);
-			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
+			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 			_b.Draw();
 			if _b.Pressed()
 			{
 				if auto_draw == 0 auto_draw = get_integer("Distance between points:", 64);
 				else auto_draw = 0;
-			}
-			i++; if _b.Hover() hover_on_button = true;
-			
-			_str = "Layer:" + string(layer_get_name(layers[layer_index]));
-			var _b = new Button(_str);
-			_b.DefineTL(32, 32 + (_y * i), string_width(_b.text), string_height(_b.text));
-			_b.Draw();
-			if _b.Pressed()
-			{
-				if layer_index < array_length(layers) - 1 layer_index++;
-				else layer_index = 0;
-			}
-			if _b.PressedR()
-			{
-				if layer_index > 0 layer_index--;
-				else layer_index = array_length(layers) - 1;
 			}
 			i++; if _b.Hover() hover_on_button = true;
 			
@@ -217,7 +279,7 @@ function PolyGmEditorDrawGUI()
 		draw_set_colour(c_white);
 		draw_set_halign(fa_left);
 		draw_set_valign(fa_bottom);
-		draw_text(32, room_height - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid\nNumber of active shapes: "+string(instance_number(PolyGmShape)));
+		draw_text(32, window_get_height() - 32, "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid\nNumber of active shapes: "+string(instance_number(PolyGmShape)));
 	}
 
 	draw_sprite(spr_cursor, -1, global.bb_mousex, global.bb_mousey);

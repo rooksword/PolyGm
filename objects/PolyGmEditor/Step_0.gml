@@ -1,5 +1,7 @@
 /// @desc Create PolyGmShape
 
+surface_resize(application_surface, window_get_width(), window_get_height());
+
 #region Snap mouse to grid
 
 var _s = keyboard_check(vk_lshift) ? global.grid_size : 1;
@@ -52,13 +54,16 @@ switch state
 			
 			with PolyGmShape
 			{
-				for (var i = 0; i < array_length(array); i++;)
+				if !locked
 				{
-					var _p = array[i];
-				
-					if PointInPolygon(_p.x, _p.y, _selection_tri)
+					for (var i = 0; i < array_length(array); i++;)
 					{
-						array_push(other.select_array, _p);
+						var _p = array[i];
+				
+						if PointInPolygon(_p.x, _p.y, _selection_tri)
+						{
+							array_push(other.select_array, _p);
+						}
 					}
 				}
 			}

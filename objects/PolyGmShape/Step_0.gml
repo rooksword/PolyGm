@@ -1,5 +1,7 @@
 /// @desc Draw and move shape
 
+locked = InArray(layer, PolyGmEditor.layers_locked);
+
 #region Drawing on create
 
 if drawing
@@ -47,7 +49,7 @@ if drawing
 
 #endregion
 
-if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
+if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 {
 	PolygonUpdate();
 	
@@ -170,3 +172,4 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT
 		}
 	}
 }
+else if mouse_over_shape mouse_over_shape = -1;

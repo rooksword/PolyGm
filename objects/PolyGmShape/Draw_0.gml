@@ -9,12 +9,12 @@ if vbuff_empty == false
 	shader_set_uniform_f_array(shader_get_uniform(sh_colour, "colour"), [
 		colour_get_red(colour)   / 255 - _darken,
 		colour_get_green(colour) / 255 - _darken,
-		colour_get_blue(colour)  / 255 - _darken, alpha / 255]);
+		colour_get_blue(colour)  / 255 - _darken, (alpha * layer_hover) / 255]);
 	vertex_submit(vbuff, pr_trianglelist, texture);
 	shader_reset();
 }
 
-if PolyGmEditor.state == EDITOR_STATES.SELECT
+if !locked and PolyGmEditor.state == EDITOR_STATES.SELECT
 {
 	for (var i = 0; i < array_length(array); i++;)
 	{

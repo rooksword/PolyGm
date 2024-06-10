@@ -1,6 +1,6 @@
 /// @desc Create save file
 
-instance_create_layer(0, 0, "Top", PolyGmEditor);
+instance_create_layer(0, 0, "GUI", PolyGmEditor);
 	
 if file_exists(global.save_directory + "polygons.sav")
 {

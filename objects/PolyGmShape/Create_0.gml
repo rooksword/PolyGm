@@ -12,6 +12,8 @@ moving_handle = -1;
 
 mouse_over_shape = false;
 
+locked = false;
+
 #endregion
 
 #region Drawing
@@ -20,6 +22,7 @@ drawing = true;
 
 colour = c_white;
 alpha = 255;
+layer_hover = 1;
 
 right = 0;
 left = 0;

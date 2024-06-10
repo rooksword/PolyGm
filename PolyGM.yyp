@@ -45,6 +45,7 @@
     {"id":{"name":"Vec2","path":"scripts/Vec2/Vec2.yy",},},
     {"id":{"name":"VertexAdd","path":"scripts/VertexAdd/VertexAdd.yy",},},
     {"id":{"name":"sh_colour","path":"shaders/sh_colour/sh_colour.yy",},},
+    {"id":{"name":"bg_lines","path":"sprites/bg_lines/bg_lines.yy",},},
     {"id":{"name":"spr_cursor","path":"sprites/spr_cursor/spr_cursor.yy",},},
     {"id":{"name":"spr_grid","path":"sprites/spr_grid/spr_grid.yy",},},
     {"id":{"name":"spr_metal","path":"sprites/spr_metal/spr_metal.yy",},},
