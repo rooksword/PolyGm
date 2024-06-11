@@ -104,12 +104,7 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 		{
 			if hover_point != -1
 			{
-				var _d = function(_element, _index)
-				{
-					return (_element == hover_point);
-				}
-				array_delete(array, array_find_index(array, _d), 1);
-				ArrayUpdate();
+				PolygonPointDelete(hover_point);
 			}
 		}
 

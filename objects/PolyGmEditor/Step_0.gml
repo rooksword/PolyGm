@@ -78,8 +78,7 @@ switch state
 		{
 			var _p = select_array[i];
 			var _mp = PosGui(mouse_xprevious, mouse_yprevious);
-			_p.x += _m[0] - _mp[0];
-			_p.y += _m[1] - _mp[1];
+			PolygonPointMove(_p, _m[0] - _mp[0], _m[1] - _mp[1]);
 		}
 		
 		with PolyGmShape
@@ -109,16 +108,7 @@ switch state
 		
 		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
 		{
-			var _inst = instance_create_layer(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), PolyGmShape);
-			with _inst
-			{
-				colour = other.colour;
-				alpha = other.alpha;
-				
-				sprite = global.textures[other.spr_index];
-				texture = sprite_get_texture(sprite, frame);
-				uvs     = sprite_get_uvs(sprite, frame);
-			}
+			PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
 		}
 		break;
 }

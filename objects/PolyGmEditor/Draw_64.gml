@@ -131,13 +131,7 @@ function PolyGmEditorDrawGUI()
 		
 		if shape_selected != -1
 		{
-			with shape_selected
-			{
-				sprite = global.textures[other.spr_index];
-				texture = sprite_get_texture(sprite, frame);
-				uvs     = sprite_get_uvs(sprite, frame);
-				ArrayUpdate();
-			}
+			with shape_selected PolygonSprite(global.textures[other.spr_index]);
 		}
 	}
 	i++; if _b.Hover() hover_on_button = true;
@@ -188,7 +182,7 @@ function PolyGmEditorDrawGUI()
 				_b.Draw();
 				if _b.Pressed()
 				{
-					PolygonDuplicate(shape_selected, _x_offset, _y_offset);
+					PolygonDuplicate(shape_selected, 100, 0);
 					shape_selected = -1;
 				}
 				i++; if _b.Hover() hover_on_button = true;
@@ -198,18 +192,12 @@ function PolyGmEditorDrawGUI()
 				_b.Draw();
 				if _b.Down()
 				{
-					with shape_selected
-					{
-						PolygonRotate(-2);
-					}
+					with shape_selected PolygonRotate(-2);
 				}
 			
 				if _b.DownR()
 				{
-					with shape_selected
-					{
-						PolygonRotate(2);
-					}
+					with shape_selected PolygonRotate(2);
 				}
 				i++; if _b.Hover() hover_on_button = true;
 			
@@ -218,16 +206,8 @@ function PolyGmEditorDrawGUI()
 				_b.Draw();
 				if _b.Pressed()
 				{
+					PolygonFlip(shape_selected, false);
 					
-					with shape_selected
-					{
-						for (var i = 0; i < array_length(array); i++;)
-						{
-					        array[i].x = x - (array[i].x - x);
-					    }
-						array = array_reverse(array);
-						ArrayUpdate();	
-					}
 				}
 				i++; if _b.Hover() hover_on_button = true;
 			
@@ -236,19 +216,12 @@ function PolyGmEditorDrawGUI()
 				_b.Draw();
 				if _b.Pressed()
 				{
-					with shape_selected
-					{
-						for (var i = 0; i < array_length(array); i++;)
-						{
-					        array[i].y = y - (array[i].y - y);
-					    }
-						array = array_reverse(array);
-						ArrayUpdate();	
-					}
+					PolygonFlip(shape_selected, false);
 				}
 				i++; if _b.Hover() hover_on_button = true;
 			}
 			break;
+			
 		case EDITOR_STATES.DRAW:
 			var _str = "Freehand: " + string(auto_draw);
 			if auto_draw == 0 _str = "Point-by-point"

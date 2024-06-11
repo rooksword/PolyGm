@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"PolygonToTriangles",
   "parent":{
-    "name":"Edit at risk",
-    "path":"folders/PolyGm/Edit at risk.yy",
+    "name":"Polygon Functions",
+    "path":"folders/PolyGm/Edit at risk/Polygon Functions.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

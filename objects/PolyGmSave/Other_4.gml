@@ -46,14 +46,11 @@ if file_exists(global.save_directory + "polygons.sav")
 			vbuff_empty = false;
 			
 			array = _load_entity.array;
-			sprite = _load_entity.sprite;
-			texture = sprite_get_texture(sprite, frame);
-			uvs     = sprite_get_uvs(sprite, frame);
+			PolygonSprite(_load_entity.sprite);
 			colour = _load_entity.colour;
 			alpha = _load_entity.alpha;
 			
 			PolygonUpdate();
-			ArrayUpdate();
 		}
 	}
 }

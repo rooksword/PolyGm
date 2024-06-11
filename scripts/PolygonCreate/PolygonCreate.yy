@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"PolygonRotate",
+  "%Name":"PolygonCreate",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"PolygonRotate",
+  "name":"PolygonCreate",
   "parent":{
     "name":"Polygon Functions",
     "path":"folders/PolyGm/Edit at risk/Polygon Functions.yy",
