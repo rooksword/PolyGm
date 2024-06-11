@@ -24,9 +24,11 @@ mouse_yc = mouse_y;         // Current mouse_y (can be snapped)
 mouse_xprevious = mouse_x;  // Previous mouse_x (can be snapped)
 mouse_yprevious = mouse_y;  // Previous mouse_y (can be snapped)
 
-layers = layer_get_all();
-layers_locked = [];
 layer_index = 0;
 
 select_array = [];
 selection = [];
+
+spr_index = 0;
+colour = c_white;
+alpha = 255;

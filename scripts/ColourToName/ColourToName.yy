@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"PolyGmGlobals",
+  "%Name":"ColourToName",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"PolyGmGlobals",
+  "name":"ColourToName",
   "parent":{
-    "name":"Do edit",
-    "path":"folders/PolyGm/Do edit.yy",
+    "name":"Edit at risk",
+    "path":"folders/PolyGm/Edit at risk.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

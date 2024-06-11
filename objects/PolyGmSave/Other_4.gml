@@ -1,5 +1,31 @@
 /// @desc Create save file
 
+global.layers = [];
+
+if file_exists(global.save_directory + "layers.sav")
+{
+	var _buffer = buffer_load(global.save_directory + "layers.sav");
+	var _string = buffer_read(_buffer, buffer_string);
+	buffer_delete(_buffer);
+	
+	global.layers = json_parse(_string);
+}
+else
+{
+	var _layers = layer_get_all();
+	for (var i = 0; i < array_length(_layers); i++;)
+	{
+		var _lay = _layers[i];
+		array_push(global.layers, {
+			name: layer_get_name(_lay),
+			locked: false,
+			visible: true,
+			colour: c_white,
+			alpha: 255
+		});
+	}
+}
+
 instance_create_layer(0, 0, "GUI", PolyGmEditor);
 	
 if file_exists(global.save_directory + "polygons.sav")

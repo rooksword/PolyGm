@@ -1,6 +1,6 @@
 /// @desc Draw and move shape
 
-locked = InArray(layer, PolyGmEditor.layers_locked);
+locked = LayerFindStruct(layer_get_name(layer)).locked;
 
 #region Drawing on create
 

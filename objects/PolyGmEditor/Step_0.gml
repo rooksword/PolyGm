@@ -1,5 +1,6 @@
 /// @desc Create PolyGmShape
 
+if keyboard_check_pressed(vk_f11) window_set_fullscreen(!window_get_fullscreen());
 surface_resize(application_surface, window_get_width(), window_get_height());
 
 #region Snap mouse to grid
@@ -108,11 +109,17 @@ switch state
 		
 		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
 		{
-			instance_create_layer(mouse_xc, mouse_yc, layers[layer_index], PolyGmShape);	
+			var _inst = instance_create_layer(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), PolyGmShape);
+			with _inst
+			{
+				colour = other.colour;
+				alpha = other.alpha;
+				
+				sprite = global.textures[other.spr_index];
+				texture = sprite_get_texture(sprite, frame);
+				uvs     = sprite_get_uvs(sprite, frame);
+			}
 		}
-		
-		layers = layer_get_all();
-		
 		break;
 }
 
@@ -123,13 +130,7 @@ var _cam = PolyGmCamera.cam;
 
 with PolyGmShape
 {
-	if !drawing
-	and !(
-	   point_in_rectangle(left, top, _cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h)
-	or point_in_rectangle(right, top, _cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h)
-	or point_in_rectangle(right, bottom, _cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h)
-	or point_in_rectangle(left, bottom, _cam.x, _cam.y, _cam.x + _cam.w, _cam.y + _cam.h)
-	)
+	if !drawing and !RectanglesIntersect(right, left, top, bottom, _cam.x + _cam.w, _cam.x, _cam.y, _cam.y + _cam.h)
 	{
 		instance_deactivate_object(id);	
 	}
