@@ -1,9 +1,9 @@
 {
   "$GMScript":"",
-  "%Name":"PolygonIsClockwise",
+  "%Name":"PolygonIsCounterclockwise",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"PolygonIsClockwise",
+  "name":"PolygonIsCounterclockwise",
   "parent":{
     "name":"Polygon Functions",
     "path":"folders/PolyGm/Edit at risk/Polygon Functions.yy",

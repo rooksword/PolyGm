@@ -20,9 +20,9 @@ global.point_size = 6;
 
 global.handle_size = 8;
 
-// While drawing a new polygon in freehand mode, draw circles around each point to show distance between points?
+// While drawing a new polygon in freehand mode, draw circles around each point to show distance between points? (0 = draw nothing, 1 = draw circle, 2 = draw line)
 
-global.auto_draw_circles = true;
+global.auto_draw_circles = 1;
 
 // Draw info text
 
@@ -39,3 +39,7 @@ global.save_directory = "";
 // If true, PolyGmEditor draws to GUI. If false, call PolyGmEditorDrawGUI() function in whichever 'Draw GUI' event you want
 
 global.draw_editor = true;
+
+// If true, all vertex buffers will get frozen upon creation (good for if you are just loading a level and don't need to edit it at runtime and want a performance boost)
+
+global.freeze = false;

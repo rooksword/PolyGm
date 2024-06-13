@@ -15,11 +15,29 @@ var _m = PosGui(mouse_xc, mouse_yc);
 
 switch state
 {
+	case EDITOR_STATES.DRAW:
+		var _can_draw = true;
+		with PolyGmShape
+		{
+			if drawing
+			or hover_shape == true
+			or hover_point != -1
+			or hover_handle != -1
+			or mouse_point != -1
+			{
+				_can_draw = false;
+			}
+		}
+		
+		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
+		{
+			PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
+		}
+		break;
 	case EDITOR_STATES.EDIT:
 		if mouse_check_button_pressed(mb_left)
 		{
 			var _can_draw = -1;
-
 			with PolyGmShape
 			{
 				if drawing
@@ -50,7 +68,7 @@ switch state
 
 		if mouse_check_button_released(mb_left)
 		{
-			if PolygonIsCounterclockwise(selection) selection = array_reverse(selection);
+			if !PolygonIsCounterclockwise(selection) selection = array_reverse(selection);
 			var _selection_tri = PolygonToTriangles(selection);
 			
 			with PolyGmShape
@@ -73,55 +91,21 @@ switch state
 			else state = EDITOR_STATES.EDIT_SELECT;
 		}
 		break;
+	
 	case EDITOR_STATES.EDIT_SELECT:
 		for (var i = 0; i < array_length(select_array); i++;)
 		{
-			var _p = select_array[i];
 			var _mp = PosGui(mouse_xprevious, mouse_yprevious);
-			PolygonPointMove(_p, _m[0] - _mp[0], _m[1] - _mp[1]);
+			PolygonPointMove(select_array[i], _m[0] - _mp[0], _m[1] - _mp[1]);
 		}
 		
-		with PolyGmShape
-		{
-			ArrayUpdate();	
-		}
+		with PolyGmShape ArrayUpdate();	
 		
 		if mouse_check_button_pressed(mb_left)
 		{
 			state = EDITOR_STATES.EDIT;
 		}
 		break;
-	case EDITOR_STATES.DRAW:
-		var _can_draw = true;
-
-		with PolyGmShape
-		{
-			if drawing
-			or hover_shape == true
-			or hover_point != -1
-			or hover_handle != -1
-			or mouse_point != -1
-			{
-				_can_draw = false;
-			}
-		}
-		
-		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
-		{
-			PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
-		}
-		break;
 }
 
-instance_activate_object(PolyGmShape);
-
-
-var _cam = PolyGmCamera.cam;
-
-with PolyGmShape
-{
-	if !drawing and !RectanglesIntersect(right, left, top, bottom, _cam.x + _cam.w, _cam.x, _cam.y, _cam.y + _cam.h)
-	{
-		instance_deactivate_object(id);	
-	}
-}
+PolygonActivation();

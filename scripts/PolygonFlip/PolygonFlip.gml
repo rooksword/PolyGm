@@ -1,22 +1,28 @@
+/// @desc Flips a polygon horizontally or vertically around its center
+/// @param {Id.Instance} _shape Instance of PolyGmShape
+/// @param {Bool} _horizontally Bool: true, then flip horizontally. False, then flip vertically
 function PolygonFlip(_shape, _horizontally)
 {
-	with _shape
+	if instance_exists(_shape)
 	{
-		if _horizontally
+		with _shape
 		{
-			for (var i = 0; i < array_length(array); i++;)
+			if _horizontally
 			{
-				array[i].x = x - (array[i].x - x);
+				for (var i = 0; i < array_length(array); i++;)
+				{
+					array[i].x = x - (array[i].x - x);
+				}
 			}
-		}
-		else
-		{
-			for (var i = 0; i < array_length(array); i++;)
+			else
 			{
-				array[i].y = y - (array[i].y - y);
+				for (var i = 0; i < array_length(array); i++;)
+				{
+					array[i].y = y - (array[i].y - y);
+				}
 			}
+			array = array_reverse(array);
+			ArrayUpdate();
 		}
-		array = array_reverse(array);
-		ArrayUpdate();
 	}
 }

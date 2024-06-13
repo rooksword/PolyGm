@@ -1,3 +1,11 @@
+/// @desc Calculates the distance between a point and a segment
+/// @param {real} _px X position to check
+/// @param {real} _py Y position to check
+/// @param {real} _x1 X co-ordinate of line start
+/// @param {real} _y1 Y co-ordinate of line start
+/// @param {real} _x2 X co-ordinate of line end
+/// @param {real} _y2 Y co-ordinate of line end
+/// @returns {real} Distance from the point to a projection point on the line
 function DistancePointToSegment(_px, _py, _x1, _y1, _x2, _y2)
 {
     // Calculate the vector projections

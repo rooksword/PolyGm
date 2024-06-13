@@ -1,3 +1,4 @@
+/// @desc Calculates the bounding box, center, nearest line, nearest point, mouse over point, shape, or handle
 function PolygonUpdate()
 {
 	hover_point = -1;

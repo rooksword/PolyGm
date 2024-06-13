@@ -1,4 +1,6 @@
-// Looks through all room layers and returns layer id of layer with matching name
+/// @desc Looks through all the layers to see if the layer name supplied is a real layer
+/// @param {string} _name The name of the layer
+/// @returns {Id.Layer} The ID of the layer or -1 if not found
 
 function LayerFind(_name)
 {
@@ -11,4 +13,5 @@ function LayerFind(_name)
 			return _lay;	
 		}
 	}
+	return -1;
 }

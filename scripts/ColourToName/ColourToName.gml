@@ -1,3 +1,6 @@
+/// @desc Takes a colour value and returns the nearest X11 colour name
+/// @param {real} _col The colour value
+/// @returns {string} The name of the colour
 function ColourToName(_col)
 {
 	var _named_colors = [

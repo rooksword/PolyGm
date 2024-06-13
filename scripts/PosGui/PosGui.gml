@@ -1,3 +1,7 @@
+/// @desc Converts a pair of game co-ordinates to GUI co-ordinates
+/// @param {real} _x X position to convert
+/// @param {real} _y Y position to convert
+/// @returns {array<real>} Returns an array where the first value is the x position 
 function PosGui(_x, _y)
 {
 	var _cl = camera_get_view_x(view_camera[0]); // Camera left

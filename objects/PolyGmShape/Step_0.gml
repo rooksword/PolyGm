@@ -26,7 +26,7 @@ if drawing
 	{
 		drawing = false; // Stop drawing shape
 		
-		if PolygonIsCounterclockwise(array) array = array_reverse(array); // Reverse shape if not clockwise
+		if !PolygonIsCounterclockwise(array) array = array_reverse(array); // Reverse shape if not clockwise
 		
 		right  = array[0].x;
 		left   = array[0].x;
@@ -117,7 +117,7 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 			var _y0 = handles_real[moving_handle].y - handles_real[_o].y;
 			var _x1 = (PolyGmEditor.mouse_xc > right ? PolyGmEditor.mouse_xc - 16 : PolyGmEditor.mouse_xc + 16) - handles_real[_o].x;
 			var _y1 = (PolyGmEditor.mouse_yc > bottom ? PolyGmEditor.mouse_yc - 16 : PolyGmEditor.mouse_yc + 16) - handles_real[_o].y;
-		
+			
 			for (var i = 0; i < array_length(array); i++;)
 			{
 				var _p = array[i];
@@ -141,8 +141,7 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 		}
 		else if moving_point != -1 // Move point
 		{
-			moving_point.x += PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious;
-			moving_point.y += PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious;
+			PolygonPointMove(moving_point, PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious);
 			ArrayUpdate();
 
 			if mouse_check_button_released(mb_left)
@@ -154,9 +153,7 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 		{
 			for (var i = 0; i < array_length(array); i++;)
 			{
-				var _p = array[i];
-				_p.x += PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious;
-				_p.y += PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious;
+				PolygonPointMove(array[i], PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious);
 			}
 			ArrayUpdate();
 	

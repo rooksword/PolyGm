@@ -1,3 +1,4 @@
+/// @desc Updates the array of the PolyGmShape
 function ArrayUpdate()
 {
 	vertex_begin(vbuff, format);
@@ -9,5 +10,5 @@ function ArrayUpdate()
 	}
 
 	vertex_end(vbuff);
-	//vertex_freeze(vbuff);
+	if global.freeze vertex_freeze(vbuff);
 }

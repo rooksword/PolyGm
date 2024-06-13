@@ -1,5 +1,24 @@
+/// @desc Returns a list of triangles created from a given 2D polygon.
+/// @param {array} _polygon Array of an ordered series of coordinated pairs (Vec2) defining the shape of a polygon
+/// @returns {array<struct.Vec2>} Returns an array containing a triangle list defining the shape of the input polygon
+/// @url https://www.gmlscripts.com/script/polygon_to_triangles
 function PolygonToTriangles(_polygon)
 {
+	/*
+	
+	Adapted from GMLscripts.com
+	
+	The polygon vertices are given and returned in traditional
+	counter-clockwise order. Polygons are closed figures with edges
+	spanning consecutive vertices and from the last vertex to the
+	first. Polygons must be simple, which means they cannot have 
+	edges that cross one another. The number of triangles created
+	is (n-2), where n is the number of vertices in the polygon.
+	
+	License: GMLscripts.com/license
+	
+	*/
+	
 	var _polygon_size, _triangles, _points, _poly_x, _poly_y, _good;
 	var i, j, _n, _p, _a, _b, _c, _x0, _y0, _x1, _y1, _x2, _y2, _x3, _y3, _x4, _y4;
 	_polygon_size = array_length(_polygon);
@@ -40,7 +59,7 @@ function PolygonToTriangles(_polygon)
 			_y2 = array_get(_poly_y, _c);
 
 			//  d. If triangle is counter-clockwise...
-			if ((_x1 - _x0) * (_y2 - _y0) + (_y0 - _y1) * (_x2 - _x0) < 0)
+			if PolygonIsCounterclockwise([new Vec2(_x0, _y0), new Vec2(_x1, _y1), new Vec2(_x2, _y2)])
 			{
 				_good = true;
 				//  ...and if triangle has no vertices within it...

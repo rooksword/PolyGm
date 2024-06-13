@@ -2,7 +2,10 @@
 
 function PolyGmEditorDrawGUI()
 {
-	if keyboard_check(vk_lshift) draw_sprite_tiled_ext(spr_grid, -1, 0, 0, global.grid_size / sprite_get_width(spr_grid), global.grid_size / sprite_get_height(spr_grid), c_white, 0.1);
+	if keyboard_check(vk_lshift)
+	{
+		draw_sprite_tiled_ext(spr_grid, -1, -camera_get_view_x(view_camera[0]), -camera_get_view_y(view_camera[0]), global.grid_size / sprite_get_width(spr_grid), global.grid_size / sprite_get_height(spr_grid), c_white, 0.1);
+	}
 	
 	global.bb_mousex = PosGui(mouse_xc, mouse_yc)[0];
 	global.bb_mousey = PosGui(mouse_xc, mouse_yc)[1];
@@ -158,7 +161,7 @@ function PolyGmEditorDrawGUI()
 			}
 		}
 	}
-	i += 2; if _b.Hover() hover_on_button = true;
+	i += 1.5; if _b.Hover() hover_on_button = true;
 	
 	#endregion
 	

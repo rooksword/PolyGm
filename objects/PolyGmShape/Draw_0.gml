@@ -68,10 +68,18 @@ if drawing or (_selected and PolyGmEditor.state == EDITOR_STATES.EDIT)
 		if hover_point == _point draw_set_colour(c_aqua);
 		draw_rectangle(_point.x - global.point_size, _point.y - global.point_size, _point.x + global.point_size, _point.y + global.point_size, false);
 		
-		if drawing and global.auto_draw_circles
+		if drawing and global.auto_draw_circles > 0 and i == array_length(array) - 1
 		{
 			draw_set_alpha(0.25);
-			draw_circle(_point.x, _point.y, PolyGmEditor.auto_draw, true);
+			
+			if global.auto_draw_circles == 1 draw_circle(_point.x, _point.y, PolyGmEditor.auto_draw, true);
+			if global.auto_draw_circles == 2
+			{
+				var _dir = point_direction(_point.x, _point.y, PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc);
+				var _dist = PolyGmEditor.auto_draw;
+				draw_line(_point.x, _point.y, _point.x + lengthdir_x(_dist, _dir), _point.y + lengthdir_y(_dist, _dir));
+			}
+			
 			draw_set_alpha(1);
 		}
 	

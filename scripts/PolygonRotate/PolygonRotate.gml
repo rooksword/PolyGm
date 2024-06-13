@@ -1,3 +1,5 @@
+/// @desc Rotates a polygon around it's center by a given angle
+/// @param {array} _spd Angle by which to rotate the polygon
 function PolygonRotate(_spd)
 {
 	for (var i = 0; i < array_length(array); i++;)

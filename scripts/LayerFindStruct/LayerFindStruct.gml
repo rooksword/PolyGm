@@ -1,5 +1,6 @@
-// Looks through array of layer structs and returns layer id of layer with matching name
-
+/// @desc Looks through the global array of layers to see if the layer name supplied is a real layer
+/// @param {string} _name The name of the layer
+/// @returns {Struct} The struct of the layer or -1 if not found
 function LayerFindStruct(_name)
 {
 	for (var i = 0; i < array_length(global.layers); i++;)
@@ -10,4 +11,5 @@ function LayerFindStruct(_name)
 			return _lay;	
 		}
 	}
+	return -1;
 }

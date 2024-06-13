@@ -1,19 +1,17 @@
+/// @desc Creates a new instance of PolyGmShape which is a duplicate of the selected instances
+/// @param {array} _polygon Array of an ordered series of coordinated pairs (Vec2) defining the shape of a polygon
+/// @param {real} _x_offset Pixels to horizontally offset the new shape by
+/// @param {real} _y_offset Pixels to vertically offset the new shape by
 function PolygonDuplicate(_polygon, _x_offset, _y_offset)
 {
-	var _new_shape = instance_create_layer(_polygon.x, _polygon.y, _polygon.layer, PolyGmShape);
+	var _new_shape = PolygonCreate(_polygon.x, _polygon.y, _polygon.layer, _polygon.colour, _polygon.alpha, -1);
+	
 	_new_shape.right = _polygon.right;
 	_new_shape.left = _polygon.left;
 	_new_shape.top = _polygon.top;
 	_new_shape.bottom = _polygon.bottom;
-	_new_shape.colour = _polygon.colour;
-	_new_shape.alpha = _polygon.alpha;
-	_new_shape.array = [];
 	
-	for (var j = 0; j < array_length(_polygon.array); j++;)
-	{
-		var _p = _polygon.array[j];
-		array_push(_new_shape.array, new Vec2(_p.x, _p.y));
-	}
+	_new_shape.array = variable_clone(_polygon.array);
 	
 	with _new_shape
 	{			

@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"ArrayDuplicatePoints",
+  "%Name":"PolygonActivation",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"ArrayDuplicatePoints",
+  "name":"PolygonActivation",
   "parent":{
-    "name":"Edit at risk",
-    "path":"folders/PolyGm/Edit at risk.yy",
+    "name":"PolyGm",
+    "path":"folders/PolyGm.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

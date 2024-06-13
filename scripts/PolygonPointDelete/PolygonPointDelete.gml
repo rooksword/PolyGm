@@ -1,3 +1,5 @@
+/// @desc Finds the input point in the array of the instance of PolyGmShape from which this function is called and deletes the point from the array
+/// @param {Struct} _p A point (Vec2)
 function PolygonPointDelete(_p)
 {
 	var _index = -1;

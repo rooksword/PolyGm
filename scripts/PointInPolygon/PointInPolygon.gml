@@ -1,3 +1,8 @@
+/// @desc Returns whether or not the point is inside a polygon
+/// @param {real} _x X position to check
+/// @param {real} _y Y position to check
+/// @param {array} _polygon Array containing a triangle list which represents the polygon
+/// @returns {Bool} Whether or not the point is inside a polygon
 function PointInPolygon(_x, _y, _polygon)
 {
 	var _inside = false;
