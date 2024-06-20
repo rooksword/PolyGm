@@ -10,14 +10,16 @@ texturegroup_unload("texgroup1");
 
 enum EDITOR_STATES          // States control what buttons and actions are available
 {						    
-	EDIT,			    
-	DRAW,
+	EDIT_POLY,			    
+	DRAW_POLY,
 	SELECT,
 	EDIT_SELECT,
-	BEZIER
+	BEZIER,
+	EDIT_OBJECT,
+	DRAW_OBJECT
 }
 						    
-state = EDITOR_STATES.EDIT; // Set the default state to 'edit'
+state = EDITOR_STATES.EDIT_POLY; // Set the default state to 'edit'
 						    
 shape_selected = -1;        // Holds a reference to the currently selected shape
 hover_on_button = false;    // Is the mouse hovering over a button?

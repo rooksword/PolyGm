@@ -19,7 +19,7 @@ function ShapeDrawDebug()
 		}
 	}
 
-	if PolyGmEditor.state == EDITOR_STATES.EDIT_SELECT
+	if PolyGmEditor.state == EDITOR_STATES.SELECT
 	{
 		var _len = array_length(array);
 		for (var i = 0; i < _len; i++;)
@@ -33,7 +33,7 @@ function ShapeDrawDebug()
 		}
 	}
 
-	if drawing or (_selected and PolyGmEditor.state == EDITOR_STATES.EDIT)
+	if drawing or (_selected and PolyGmEditor.state == EDITOR_STATES.EDIT_POLY)
 	{
 		#region Debug
 	

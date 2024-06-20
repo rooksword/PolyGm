@@ -18,6 +18,7 @@ if active
 {
 	switch state
 	{
+		#region BEZIER
 		case EDITOR_STATES.BEZIER:
 			var _can_create = true;
 			with PolyGmBezier
@@ -31,10 +32,13 @@ if active
 		
 			if !hover_on_button and _can_create and mouse_check_button_pressed(mb_left)
 			{
-				instance_create_layer(mouse_xc, mouse_yc, "PGMBezier", PolyGmBezier);	
+				var _inst = instance_create_layer(mouse_xc, mouse_yc, "PGMBezier", PolyGmBezier);	
+				array_push(PolyGmShapeDraw.shapes, _inst);
 			}
 			break;
-		case EDITOR_STATES.DRAW:
+		#endregion
+		#region DRAW POLY
+		case EDITOR_STATES.DRAW_POLY:
 			var _can_draw = true;
 			with PolyGmShape
 			{
@@ -53,7 +57,9 @@ if active
 				PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
 			}
 			break;
-		case EDITOR_STATES.EDIT:
+		#endregion
+		#region EDIT POLY
+		case EDITOR_STATES.EDIT_POLY:
 			if mouse_check_button_pressed(mb_left)
 			{
 				var _can_draw = -1;
@@ -82,6 +88,8 @@ if active
 				}
 			}
 			break;
+		#endregion
+		#region SELECT
 		case EDITOR_STATES.SELECT:
 			array_push(selection, new Vec2(mouse_xc, mouse_yc));
 
@@ -109,11 +117,12 @@ if active
 					}
 				}
 			
-				if array_length(select_array) == 0 state = EDITOR_STATES.EDIT;
+				if array_length(select_array) == 0 state = EDITOR_STATES.EDIT_POLY;
 				else state = EDITOR_STATES.EDIT_SELECT;
 			}
 			break;
-	
+		#endregion
+		#region EDIT SELECT
 		case EDITOR_STATES.EDIT_SELECT:
 			var _len = array_length(select_array);
 			for (var i = 0; i < _len; i++;)
@@ -126,9 +135,59 @@ if active
 		
 			if mouse_check_button_pressed(mb_left)
 			{
-				state = EDITOR_STATES.EDIT;
+				state = EDITOR_STATES.EDIT_POLY;
 			}
 			break;
+		#endregion
+		#region DRAW OBJECT
+		case EDITOR_STATES.DRAW_OBJECT:
+			var _can_draw = true;
+			with PolyGmShape
+			{
+				if drawing
+				or hover_shape == true
+				or hover_point != -1
+				or hover_handle != -1
+				or mouse_point != -1
+				{
+					_can_draw = false;
+				}
+			}
+			
+			if position_meeting(mouse_xc, mouse_yc, PolyGmObject)
+			{
+				_can_draw = false;	
+			}
+		
+			if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
+			{
+				var _inst = instance_create_layer(
+					mouse_xc, mouse_yc,
+					LayerFind(global.layers[layer_index].name),
+					PolyGmObject);
+				_inst.colour = colour;
+				_inst.alpha = alpha;
+			}
+			break;
+		#endregion
+		#region EDIT OBJECT
+		case EDITOR_STATES.EDIT_OBJECT:
+			if shape_selected == -1
+			{
+				if mouse_check_button_pressed(mb_left) and position_meeting(mouse_xc, mouse_yc, PolyGmObject)
+				{
+					shape_selected = instance_position(mouse_xc, mouse_yc, PolyGmObject);
+				}
+			}
+			else
+			{
+				if mouse_check_button(mb_left)
+				{
+					PolygonPointMove(shape_selected, mouse_xc - mouse_xprevious, mouse_yc - mouse_yprevious);
+				}
+			}
+			break;
+		#endregion
 	}
 }
 else

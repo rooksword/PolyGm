@@ -23,30 +23,49 @@ function PolyGmEditorDrawGUI()
 	
 	#region Switch mode (edit and draw) button
 	
-	var _mode = "Edit";
-	if state == EDITOR_STATES.DRAW _mode = "Draw";
-	if state == EDITOR_STATES.BEZIER _mode = "Bezier";
-	
-	var _edit = new Button("Edit");
-	_edit.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_edit.text), _h);
+	var _editing_objects = state == EDITOR_STATES.EDIT_OBJECT or state == EDITOR_STATES.DRAW_OBJECT;
+	var _edit = new Button(_editing_objects ? "Object" : "Poly");
+	var _w = global.bb_padding;
+	_edit.DefineTL(_w, global.bb_padding + (_y * i), string_width(_edit.text), _h);
 	_edit.Draw();
-	if _edit.Pressed()
+	if _edit.Pressed() or keyboard_check_pressed(global.shortcut_poly)
 	{
-		state = EDITOR_STATES.EDIT;
+		if _editing_objects
+		{
+			if state == EDITOR_STATES.EDIT_OBJECT state = EDITOR_STATES.EDIT_POLY;
+			else state = EDITOR_STATES.DRAW_POLY;
+		}
+		else
+		{
+			if state == EDITOR_STATES.EDIT_POLY state = EDITOR_STATES.EDIT_OBJECT;
+			else state = EDITOR_STATES.DRAW_OBJECT;
+		}
 	}
 	if _edit.Hover() hover_on_button = true;
 	
-	var _draw = new Button("Draw");
-	_draw.DefineTL(global.bb_padding * 2 + (_edit.x1 - _edit.x0), global.bb_padding + (_y * i), string_width(_draw.text), _h);
+	var _drawing = state == EDITOR_STATES.DRAW_OBJECT or state == EDITOR_STATES.DRAW_POLY;
+	var _draw = new Button(_drawing ? "Draw" : "Edit");
+	_w += global.bb_padding + (_edit.x1 - _edit.x0);
+	_draw.DefineTL(_w, global.bb_padding + (_y * i), string_width(_draw.text), _h);
 	_draw.Draw();
-	if _draw.Pressed()
+	if _draw.Pressed() or keyboard_check_pressed(global.shortcut_edit)
 	{
-		state = EDITOR_STATES.DRAW;
+		if _drawing
+		{
+			if state == EDITOR_STATES.DRAW_OBJECT state = EDITOR_STATES.EDIT_OBJECT;
+			else state = EDITOR_STATES.EDIT_POLY;
+		}
+		else
+		{
+			if state == EDITOR_STATES.EDIT_OBJECT state = EDITOR_STATES.DRAW_OBJECT;
+			else state = EDITOR_STATES.DRAW_POLY;
+		}
 	}
 	if _draw.Hover() hover_on_button = true;
 	
 	var _bez = new Button("Bezier");
-	_bez.DefineTL(global.bb_padding * 3 + (_edit.x1 - _edit.x0) + (_draw.x1 - _draw.x0), global.bb_padding + (_y * i), string_width(_bez.text), _h);
+	_w += global.bb_padding + (_draw.x1 - _draw.x0);
+	_bez.DefineTL(_w, global.bb_padding + (_y * i), string_width(_bez.text), _h);
 	_bez.Draw();
 	if _bez.Pressed()
 	{
@@ -128,7 +147,7 @@ function PolyGmEditorDrawGUI()
 	{
 		with PolyGmShape
 		{
-			layer_hover = _layer_real != layer ? 0.25 : 1;
+			layer_hover = _layer_real != layer ? 0.25 : 1; //TODO could probs be optimised by inputting into draw pipeline
 		}
 		with PolyGmBezier
 		{
@@ -146,18 +165,25 @@ function PolyGmEditorDrawGUI()
 	
 	#region Sprite and colour
 	
+	var _index = -1;
+	if shape_selected != -1 _index = shape_selected.object_index;
+	
 	var _b = new Button("Change sprite: " + sprite_get_name(global.textures[spr_index]));
 	_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 	_b.Draw();
 	if _b.Pressed()
 	{
-		if spr_index < array_length(global.textures) - 1 spr_index++;
-		else spr_index = 0;
-		
-		if shape_selected != -1
+		if _index == PolyGmShape
 		{
+			if spr_index < array_length(global.textures) - 1 spr_index++;
+			else spr_index = 0;
+			
 			var _tex = global.textures[spr_index];
 			with shape_selected PolygonSprite(_tex);
+		}
+		else if _index == PolyGmObject
+		{
+			shape_selected.sprite_index = asset_get_index(get_string("Sprite name", ""));	
 		}
 	}
 	i++; if _b.Hover() hover_on_button = true;
@@ -175,101 +201,146 @@ function PolyGmEditorDrawGUI()
 		
 		alpha = get_integer("Alpha (0 - 255):", alpha);
 		
-		if shape_selected != -1
+		if _index != -1
 		{
-			var _col = colour;
-			var _alp = alpha;
-			with shape_selected
-			{
-				colour = _col;
-				alpha = _alp;
-			}
+			shape_selected.colour = colour;
+			shape_selected.alpha = alpha;
 		}
 	}
 	i += 1.5; if _b.Hover() hover_on_button = true;
 	
 	#endregion
 	
-	switch state
+	if _index != -1
+	and (state == EDITOR_STATES.EDIT_POLY or state == EDITOR_STATES.EDIT_OBJECT)
 	{
-		case EDITOR_STATES.EDIT:
-			if shape_selected != -1
+		var _b = new Button("Delete shape");
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Pressed()
+		{
+			instance_destroy(shape_selected);
+			shape_selected = -1;
+		}
+		i++; if _b.Hover() hover_on_button = true;
+		
+		var _b = new Button("Duplicate shape");
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Pressed()
+		{
+			if _index == PolyGmShape PolygonDuplicate(shape_selected, 100, 0);
+			else if _index == PolyGmObject
 			{
-				var _b = new Button("Delete shape");
-				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-				_b.Draw();
-				if _b.Pressed()
-				{
-					instance_destroy(shape_selected);
-					shape_selected = -1;
-				}
-				i++; if _b.Hover() hover_on_button = true;
-			
-				var _b = new Button("Duplicate shape");
-				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-				_b.Draw();
-				if _b.Pressed()
-				{
-					PolygonDuplicate(shape_selected, 100, 0);
-					shape_selected = -1;
-				}
-				i++; if _b.Hover() hover_on_button = true;
-			
-				var _b = new Button("Rotate shape");
-				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-				_b.Draw();
-				if _b.Down()
-				{
-					with shape_selected PolygonRotate(-2);
-				}
-			
-				if _b.DownR()
-				{
-					with shape_selected PolygonRotate(2);
-				}
-				i++; if _b.Hover() hover_on_button = true;
-			
-				var _b = new Button("Flip shape horizontally");
-				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-				_b.Draw();
-				if _b.Pressed()
-				{
-					PolygonFlip(shape_selected, false);
-					
-				}
-				i++; if _b.Hover() hover_on_button = true;
-			
-				var _b = new Button("Flip shape vertically");
-				_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-				_b.Draw();
-				if _b.Pressed()
-				{
-					PolygonFlip(shape_selected, false);
-				}
-				i++; if _b.Hover() hover_on_button = true;
+				var _inst = instance_create_layer(shape_selected.x + 100, shape_selected.y, shape_selected.layer, PolyGmObject);
+				_inst.sprite_index = shape_selected.sprite_index;
+				_inst.colour       = shape_selected.colour;
+				_inst.alpha        = shape_selected.alpha;
+				_inst.layer        = shape_selected.layer;
+				_inst.image_xscale = shape_selected.image_xscale;
+				_inst.image_yscale = shape_selected.image_yscale;
+				_inst.image_angle  = shape_selected.image_angle;
+				_inst.angle_speed  = shape_selected.angle_speed;
+				_inst.spd          = shape_selected.spd;
+				_inst.offset       = shape_selected.offset
 			}
-			break;
+			shape_selected = -1;
+		}
+		i++; if _b.Hover() hover_on_button = true;
 			
-		case EDITOR_STATES.DRAW:
-			var _str = "Freehand: " + string(global.auto_draw);
-			if global.auto_draw == 0 _str = "Point-by-point"
-			var _b = new Button(_str);
+		var _b = new Button("Rotate shape");
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Down()
+		{
+			if _index == PolyGmShape with shape_selected PolygonRotate(-2);
+			else if _index == PolyGmObject shape_selected.image_angle -= 2;
+		}
+			
+		if _b.DownR()
+		{
+			if _index == PolyGmShape with shape_selected PolygonRotate(2);
+			else if _index == PolyGmObject shape_selected.image_angle += 2;
+		}
+		i++; if _b.Hover() hover_on_button = true;
+			
+		var _b = new Button("Flip shape horizontally");
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Pressed()
+		{
+			if _index == PolyGmShape PolygonFlip(shape_selected, true);
+			else if _index == PolyGmObject with shape_selected image_xscale *= -1;
+					
+		}
+		i++; if _b.Hover() hover_on_button = true;
+			
+		var _b = new Button("Flip shape vertically");
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Pressed()
+		{
+			if _index == PolyGmShape PolygonFlip(shape_selected, false);
+			else if _index == PolyGmObject with shape_selected image_yscale *= -1;
+		}
+		i += 1.5; if _b.Hover() hover_on_button = true;
+		
+		if state == EDITOR_STATES.EDIT_OBJECT
+		{
+			var _b = new Button("X scale");
 			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 			_b.Draw();
 			if _b.Pressed()
 			{
-				if global.auto_draw == 0 global.auto_draw = get_integer("Distance between points:", 64);
-				else global.auto_draw = 0;
+				shape_selected.image_xscale += 0.5;
+			}
+			if _b.PressedR()
+			{
+				shape_selected.image_xscale -= 0.5;
 			}
 			i++; if _b.Hover() hover_on_button = true;
 			
-			break;
+			var _b = new Button("Y scale");
+			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+			_b.Draw();
+			if _b.Pressed()
+			{
+				shape_selected.image_yscale += 0.5;
+			}
+			if _b.PressedR()
+			{
+				shape_selected.image_yscale -= 0.5;
+			}
+			i++; if _b.Hover() hover_on_button = true;
+		}
+	}
+	else if state == EDITOR_STATES.DRAW_POLY
+	{
+		var _str = "Freehand: " + string(global.auto_draw);
+		if global.auto_draw == 0 _str = "Point-by-point"
+		var _b = new Button(_str);
+		_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+		_b.Draw();
+		if _b.Pressed()
+		{
+			if global.auto_draw == 0 global.auto_draw = get_integer("Distance between points:", 64);
+			else global.auto_draw = 0;
+		}
+		i++; if _b.Hover() hover_on_button = true;
 	}
 
 	var _select = false;
 	with PolyGmShape
 	{
-		if mouse_over_shape or hover_point != -1 or hover_handle != -1 or mouse_point != -1 _select = true;	
+		if mouse_over_shape or hover_point != -1 or hover_handle != -1 or mouse_point != -1
+		{
+			_select = true;
+		}
+	}
+	
+	if position_meeting(mouse_xc, mouse_yc, PolyGmObject)
+	{
+		_select = true;	
 	}
 
 	if shape_selected != -1 // Shape is selected

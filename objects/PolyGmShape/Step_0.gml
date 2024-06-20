@@ -49,7 +49,7 @@ if drawing
 
 #endregion
 
-if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked and PolyGmEditor.active
+if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT_POLY and !locked and PolyGmEditor.active
 {
 	PolygonUpdate();
 	

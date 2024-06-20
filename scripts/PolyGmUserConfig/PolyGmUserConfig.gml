@@ -103,3 +103,11 @@ global.draw_editor = true;
 // If true, all vertex buffers will get frozen upon creation (good for if you are just loading a level and don't need to edit it at runtime and want a performance boost)
 
 global.freeze = false;
+
+// Keyboard shortcut to switch between working with polygons and shapes
+
+global.shortcut_poly = ord("O");
+
+// Keyboard shortcut to switch between editing and drawing
+
+global.shortcut_edit = ord("P");
