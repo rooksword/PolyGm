@@ -10,6 +10,8 @@ for (var i = 0; i < instance_number(PolyGmObject); i++;)
 	var _save_entity = {
 		x: _inst.x,
 		y: _inst.y,
+		origin: _inst.origin,
+		target: _inst.target,
 		sprite_index: _inst.sprite_index,
 		colour: _inst.colour,
 		alpha: _inst.alpha,

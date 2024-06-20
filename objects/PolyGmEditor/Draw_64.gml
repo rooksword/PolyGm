@@ -312,6 +312,45 @@ function PolyGmEditorDrawGUI()
 				shape_selected.image_yscale -= 0.5;
 			}
 			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Speed: " + string(shape_selected.spd));
+			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+			_b.Draw();
+			if _b.Pressed()
+			{
+				shape_selected.spd += 0.25;
+			}
+			if _b.PressedR()
+			{
+				shape_selected.spd -= 0.5;
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Offset: " + string(shape_selected.offset));
+			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+			_b.Draw();
+			if _b.Pressed()
+			{
+				shape_selected.offset += 0.25;
+			}
+			if _b.PressedR()
+			{
+				shape_selected.offset -= 0.25;
+			}
+			i++; if _b.Hover() hover_on_button = true;
+			
+			var _b = new Button("Auto rotate: " + string(shape_selected.angle_speed));
+			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
+			_b.Draw();
+			if _b.Pressed()
+			{
+				shape_selected.angle_speed += 0.5;
+			}
+			if _b.PressedR()
+			{
+				shape_selected.angle_speed -= 0.5;
+			}
+			i++; if _b.Hover() hover_on_button = true;
 		}
 	}
 	else if state == EDITOR_STATES.DRAW_POLY
@@ -338,9 +377,14 @@ function PolyGmEditorDrawGUI()
 		}
 	}
 	
-	if position_meeting(mouse_xc, mouse_yc, PolyGmObject)
+	if _index == PolyGmObject
 	{
-		_select = true;	
+		if shape_selected.mo
+		or shape_selected.mt
+		or position_meeting(mouse_xc, mouse_yc, shape_selected)
+		{
+			_select = true;
+		}
 	}
 
 	if shape_selected != -1 // Shape is selected

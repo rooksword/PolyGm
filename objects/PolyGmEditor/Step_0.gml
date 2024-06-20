@@ -165,6 +165,8 @@ if active
 					mouse_xc, mouse_yc,
 					LayerFind(global.layers[layer_index].name),
 					PolyGmObject);
+				_inst.origin = new Vec2(mouse_xc, mouse_yc);
+				_inst.target = new Vec2(mouse_xc + 100, mouse_yc);
 				_inst.colour = colour;
 				_inst.alpha = alpha;
 			}
@@ -183,7 +185,8 @@ if active
 			{
 				if mouse_check_button(mb_left)
 				{
-					PolygonPointMove(shape_selected, mouse_xc - mouse_xprevious, mouse_yc - mouse_yprevious);
+					if shape_selected.mo PolygonPointMove(shape_selected.origin, mouse_xc - mouse_xprevious, mouse_yc - mouse_yprevious);
+					if shape_selected.mt PolygonPointMove(shape_selected.target, mouse_xc - mouse_xprevious, mouse_yc - mouse_yprevious);
 				}
 			}
 			break;

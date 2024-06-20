@@ -105,6 +105,8 @@ if file_exists(global.save_directory + "objects.sav")
 			angle_speed  = _load_entity.angle_speed;
 			spd          = _load_entity.spd;
 			offset		 = _load_entity.offset;
+			origin       = _load_entity.origin;
+			target       = _load_entity.target;
 		}
 		array_push(PolyGmShapeDraw.shapes, _inst);
 	}
