@@ -3,9 +3,11 @@
 /// @returns {Struct} The struct of the layer or -1 if not found
 function LayerFindStruct(_name)
 {
-	for (var i = 0; i < array_length(global.layers); i++;)
+	var _arr = global.layers;
+	var _len = array_length(_arr);
+	for (var i = 0; i < _len; i++;)
 	{
-		var _lay = global.layers[i];
+		var _lay = _arr[i];
 		if _lay.name == _name
 		{
 			return _lay;	

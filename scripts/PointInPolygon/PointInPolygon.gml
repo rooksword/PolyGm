@@ -6,8 +6,9 @@
 function PointInPolygon(_x, _y, _polygon)
 {
 	var _inside = false;
-  
-	for (var i = 0; i < array_length(_polygon); i += 3;)
+	var _len = array_length(_polygon);
+	
+	for (var i = 0; i < _len; i += 3;)
 	{
 		var _a = _polygon[i];
 		var _b = _polygon[i + 1];

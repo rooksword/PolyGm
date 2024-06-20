@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"PointInPolygon",
   "parent":{
-    "name":"Edit at risk",
-    "path":"folders/PolyGm/Edit at risk.yy",
+    "name":"Scripts",
+    "path":"folders/PolyGm/Edit at risk/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -13,8 +13,8 @@ if drawing
 	// New point
 	
 	var _dist = point_distance(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _last_point.x, _last_point.y);
-	if (PolyGmEditor.auto_draw == 0 and mouse_check_button_pressed(mb_left))
-	or (PolyGmEditor.auto_draw > 0 and (_dist > PolyGmEditor.auto_draw or (keyboard_check(vk_lshift) and (PolyGmEditor.mouse_xc != PolyGmEditor.mouse_xprevious or PolyGmEditor.mouse_yc != PolyGmEditor.mouse_yprevious))))
+	if (global.auto_draw == 0 and mouse_check_button_pressed(mb_left))
+	or (global.auto_draw > 0 and (_dist > global.auto_draw or (keyboard_check(vk_lshift) and (PolyGmEditor.mouse_xc != PolyGmEditor.mouse_xprevious or PolyGmEditor.mouse_yc != PolyGmEditor.mouse_yprevious))))
 	{
 		array_push(array, new Vec2(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc));
 	}
@@ -22,7 +22,7 @@ if drawing
 	// Finish shape
 	
 	if _len > 2 // Not first point
-	and point_distance(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _first_point.x, _first_point.y) < (PolyGmEditor.auto_draw == 0 ? 32 : PolyGmEditor.auto_draw) // Close to first point
+	and point_distance(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, _first_point.x, _first_point.y) < (global.auto_draw == 0 ? 32 : global.auto_draw) // Close to first point
 	{
 		drawing = false; // Stop drawing shape
 		
@@ -49,7 +49,7 @@ if drawing
 
 #endregion
 
-if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
+if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked and PolyGmEditor.active
 {
 	PolygonUpdate();
 	
@@ -118,7 +118,8 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 			var _x1 = (PolyGmEditor.mouse_xc > right ? PolyGmEditor.mouse_xc - 16 : PolyGmEditor.mouse_xc + 16) - handles_real[_o].x;
 			var _y1 = (PolyGmEditor.mouse_yc > bottom ? PolyGmEditor.mouse_yc - 16 : PolyGmEditor.mouse_yc + 16) - handles_real[_o].y;
 			
-			for (var i = 0; i < array_length(array); i++;)
+			var _len = array_length(array);
+			for (var i = 0; i < _len; i++;)
 			{
 				var _p = array[i];
 			
@@ -151,7 +152,8 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 		}
 		else if moving_shape // Move shape
 		{
-			for (var i = 0; i < array_length(array); i++;)
+			var _len = array_length(array);
+			for (var i = 0; i < _len; i++;)
 			{
 				PolygonPointMove(array[i], PolyGmEditor.mouse_xc - PolyGmEditor.mouse_xprevious, PolyGmEditor.mouse_yc - PolyGmEditor.mouse_yprevious);
 			}
@@ -164,4 +166,8 @@ if vbuff_empty == false and PolyGmEditor.state = EDITOR_STATES.EDIT and !locked
 		}
 	}
 }
-else if mouse_over_shape mouse_over_shape = -1;
+else
+{
+	if mouse_over_shape != -1 mouse_over_shape = -1;
+	if hover_shape      != -1 hover_shape = -1;
+}

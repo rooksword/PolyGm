@@ -16,7 +16,8 @@ function PolygonDuplicate(_polygon, _x_offset, _y_offset)
 	with _new_shape
 	{			
 		drawing = false;
-		for (var i = 0; i < array_length(array); i++;)
+		var _len = array_length(array);
+		for (var i = 0; i < _len; i++;)
 		{
 			var _point = array[i];
 			_point.x += _x_offset;

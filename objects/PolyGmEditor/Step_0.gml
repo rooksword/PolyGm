@@ -9,35 +9,33 @@ var _s = keyboard_check(vk_lshift) ? global.grid_size : 1;
 mouse_xc = floor(mouse_x / _s) * _s;
 mouse_yc = floor(mouse_y / _s) * _s;
 
-#endregion
-
 var _m = PosGui(mouse_xc, mouse_yc);
 
-switch state
+#endregion
+
+active = true;
+if active
 {
-	case EDITOR_STATES.DRAW:
-		var _can_draw = true;
-		with PolyGmShape
-		{
-			if drawing
-			or hover_shape == true
-			or hover_point != -1
-			or hover_handle != -1
-			or mouse_point != -1
+	switch state
+	{
+		case EDITOR_STATES.BEZIER:
+			var _can_create = true;
+			with PolyGmBezier
 			{
-				_can_draw = false;
+				if point_hover != -1
+				or point_hold != -1
+				{
+					_can_create = false;	
+				}
 			}
-		}
 		
-		if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
-		{
-			PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
-		}
-		break;
-	case EDITOR_STATES.EDIT:
-		if mouse_check_button_pressed(mb_left)
-		{
-			var _can_draw = -1;
+			if !hover_on_button and _can_create and mouse_check_button_pressed(mb_left)
+			{
+				instance_create_layer(mouse_xc, mouse_yc, "PGMBezier", PolyGmBezier);	
+			}
+			break;
+		case EDITOR_STATES.DRAW:
+			var _can_draw = true;
 			with PolyGmShape
 			{
 				if drawing
@@ -46,66 +44,96 @@ switch state
 				or hover_handle != -1
 				or mouse_point != -1
 				{
-					_can_draw = id;
+					_can_draw = false;
 				}
 			}
-			
-			if _can_draw != -1
+		
+			if !hover_on_button and _can_draw and mouse_check_button_pressed(mb_left)
 			{
-				shape_selected = _can_draw;	
+				PolygonCreate(mouse_xc, mouse_yc, LayerFind(global.layers[layer_index].name), colour, alpha, global.textures[spr_index]);
 			}
-			else if !hover_on_button
+			break;
+		case EDITOR_STATES.EDIT:
+			if mouse_check_button_pressed(mb_left)
 			{
-				selection = [];
-				select_array = [];
-				state = EDITOR_STATES.SELECT;
-				array_push(selection, new Vec2(mouse_xc, mouse_yc));
-			}
-		}
-		break;
-	case EDITOR_STATES.SELECT:
-		array_push(selection, new Vec2(mouse_xc, mouse_yc));
-
-		if mouse_check_button_released(mb_left)
-		{
-			if !PolygonIsCounterclockwise(selection) selection = array_reverse(selection);
-			var _selection_tri = PolygonToTriangles(selection);
-			
-			with PolyGmShape
-			{
-				if !locked
+				var _can_draw = -1;
+				with PolyGmShape
 				{
-					for (var i = 0; i < array_length(array); i++;)
+					if drawing
+					or hover_shape == true
+					or hover_point != -1
+					or hover_handle != -1
+					or mouse_point != -1
 					{
-						var _p = array[i];
+						_can_draw = id;
+					}
+				}
+			
+				if _can_draw != -1
+				{
+					shape_selected = _can_draw;	
+				}
+				else if !hover_on_button
+				{
+					selection = [];
+					select_array = [];
+					state = EDITOR_STATES.SELECT;
+					array_push(selection, new Vec2(mouse_xc, mouse_yc));
+				}
+			}
+			break;
+		case EDITOR_STATES.SELECT:
+			array_push(selection, new Vec2(mouse_xc, mouse_yc));
+
+			if mouse_check_button_released(mb_left)
+			{
+				if !PolygonIsCounterclockwise(selection) selection = array_reverse(selection);
+				var _selection_tri = PolygonToTriangles(selection);
+			
+				var _select_array = select_array;
 				
-						if PointInPolygon(_p.x, _p.y, _selection_tri)
+				with PolyGmShape
+				{
+					if !locked
+					{
+						var _len = array_length(array);
+						for (var i = 0; i < _len; i++;)
 						{
-							array_push(other.select_array, _p);
+							var _p = array[i];
+				
+							if PointInPolygon(_p.x, _p.y, _selection_tri)
+							{
+								array_push(_select_array, _p);
+							}
 						}
 					}
 				}
-			}
 			
-			if array_length(select_array) == 0 state = EDITOR_STATES.EDIT;
-			else state = EDITOR_STATES.EDIT_SELECT;
-		}
-		break;
+				if array_length(select_array) == 0 state = EDITOR_STATES.EDIT;
+				else state = EDITOR_STATES.EDIT_SELECT;
+			}
+			break;
 	
-	case EDITOR_STATES.EDIT_SELECT:
-		for (var i = 0; i < array_length(select_array); i++;)
-		{
-			var _mp = PosGui(mouse_xprevious, mouse_yprevious);
-			PolygonPointMove(select_array[i], _m[0] - _mp[0], _m[1] - _mp[1]);
-		}
+		case EDITOR_STATES.EDIT_SELECT:
+			var _len = array_length(select_array);
+			for (var i = 0; i < _len; i++;)
+			{
+				var _mp = PosGui(mouse_xprevious, mouse_yprevious);
+				PolygonPointMove(select_array[i], _m[0] - _mp[0], _m[1] - _mp[1]);
+			}
 		
-		with PolyGmShape ArrayUpdate();	
+			with PolyGmShape ArrayUpdate();	
 		
-		if mouse_check_button_pressed(mb_left)
-		{
-			state = EDITOR_STATES.EDIT;
-		}
-		break;
+			if mouse_check_button_pressed(mb_left)
+			{
+				state = EDITOR_STATES.EDIT;
+			}
+			break;
+	}
+}
+else
+{
+	shape_selected = -1;	
 }
 
 PolygonActivation();

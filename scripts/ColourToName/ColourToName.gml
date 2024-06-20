@@ -152,7 +152,9 @@ function ColourToName(_col)
 	var _g0 = colour_get_green(_col);
 	var _b0 = colour_get_blue(_col);
 	
-	for (var i = 0; i < array_length(_named_colors); i++;)
+	var _len = array_length(_named_colors);
+	
+	for (var i = 0; i < _len; i++;)
 	{
 		var _c = _named_colors[i, 1];
 		var _d = _named_colors[_nearest, 1];

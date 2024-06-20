@@ -1,12 +1,12 @@
 {
   "$GMScript":"",
-  "%Name":"PolygonActivation",
+  "%Name":"BezierPointFind",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"PolygonActivation",
+  "name":"BezierPointFind",
   "parent":{
-    "name":"PolyGm",
-    "path":"folders/PolyGm.yy",
+    "name":"Scripts",
+    "path":"folders/PolyGm/Edit at risk/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

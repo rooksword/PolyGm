@@ -2,6 +2,8 @@
 
 function PolyGmEditorDrawGUI()
 {
+	draw_set_font(fnt_poly);
+	
 	if keyboard_check(vk_lshift)
 	{
 		draw_sprite_tiled_ext(spr_grid, -1, -camera_get_view_x(view_camera[0]), -camera_get_view_y(view_camera[0]), global.grid_size / sprite_get_width(spr_grid), global.grid_size / sprite_get_height(spr_grid), c_white, 0.1);
@@ -23,16 +25,36 @@ function PolyGmEditorDrawGUI()
 	
 	var _mode = "Edit";
 	if state == EDITOR_STATES.DRAW _mode = "Draw";
+	if state == EDITOR_STATES.BEZIER _mode = "Bezier";
 	
-	var _b = new Button("Mode: " + _mode);
-	_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
-	_b.Draw();
-	if _b.Pressed()
+	var _edit = new Button("Edit");
+	_edit.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_edit.text), _h);
+	_edit.Draw();
+	if _edit.Pressed()
 	{
-		if state == EDITOR_STATES.EDIT state = EDITOR_STATES.DRAW;
-		else state = EDITOR_STATES.EDIT;
+		state = EDITOR_STATES.EDIT;
 	}
-	i += 1.5; if _b.Hover() hover_on_button = true;
+	if _edit.Hover() hover_on_button = true;
+	
+	var _draw = new Button("Draw");
+	_draw.DefineTL(global.bb_padding * 2 + (_edit.x1 - _edit.x0), global.bb_padding + (_y * i), string_width(_draw.text), _h);
+	_draw.Draw();
+	if _draw.Pressed()
+	{
+		state = EDITOR_STATES.DRAW;
+	}
+	if _draw.Hover() hover_on_button = true;
+	
+	var _bez = new Button("Bezier");
+	_bez.DefineTL(global.bb_padding * 3 + (_edit.x1 - _edit.x0) + (_draw.x1 - _draw.x0), global.bb_padding + (_y * i), string_width(_bez.text), _h);
+	_bez.Draw();
+	if _bez.Pressed()
+	{
+		state = EDITOR_STATES.BEZIER;
+	}
+	if _bez.Hover() hover_on_button = true;
+	
+	i += 1.5; 
 	
 	#endregion
 	
@@ -40,8 +62,10 @@ function PolyGmEditorDrawGUI()
 	
 	var _layer_current = global.layers[layer_index];
 	var _layer_real = LayerFind(_layer_current.name);
+	var _vis = layer_get_visible(_layer_real);
+	var _loc = _layer_current.locked;
 	
-	var _l0 = new Button("Layer:" + _layer_current.name);
+	var _l0 = new Button("Layer: " + string(layer_index) + " " + string_delete(_layer_current.name, 1, 3) + " " + (_vis ? "V " : "H ") + (_loc ? "L" : "U"));
 	_l0.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l0.text), _h);
 	_l0.Draw();
 	if _l0.Pressed()
@@ -57,7 +81,7 @@ function PolyGmEditorDrawGUI()
 	i++;
 	if _l0.Hover() hover_on_button = true;
 	
-	var _l1 = new Button(layer_get_visible(_layer_real) ? "Hide layer" : "Show layer");
+	var _l1 = new Button(_vis ? "Hide layer" : "Show layer");
 	_l1.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l1.text), _h);
 	_l1.Draw();
 	if _l1.Pressed()
@@ -73,7 +97,7 @@ function PolyGmEditorDrawGUI()
 	}
 	i++; if _l1.Hover() hover_on_button = true;
 	
-	var _str = "Layer:" + string(_layer_current.locked ? "Unlock" : "Lock");
+	var _str = "Layer:" + string(_loc ? "Unlock" : "Lock");
 	var _l2 = new Button(_str);
 	_l2.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_l2.text), _h);
 	_l2.Draw();
@@ -104,20 +128,18 @@ function PolyGmEditorDrawGUI()
 	{
 		with PolyGmShape
 		{
-			if _layer_real != layer
-			{
-				layer_hover = 0.25;
-			}
-			else
-			{
-				layer_hover = 1;	
-			}
+			layer_hover = _layer_real != layer ? 0.25 : 1;
+		}
+		with PolyGmBezier
+		{
+			layer_hover = _layer_real != layer ? 0.25 : 1;
 		}
 		hover_on_button = true;
 	}
 	else
 	{
 		with PolyGmShape layer_hover = 1;	
+		with PolyGmBezier layer_hover = 1;	
 	}
 	
 	#endregion
@@ -134,7 +156,8 @@ function PolyGmEditorDrawGUI()
 		
 		if shape_selected != -1
 		{
-			with shape_selected PolygonSprite(global.textures[other.spr_index]);
+			var _tex = global.textures[spr_index];
+			with shape_selected PolygonSprite(_tex);
 		}
 	}
 	i++; if _b.Hover() hover_on_button = true;
@@ -154,10 +177,12 @@ function PolyGmEditorDrawGUI()
 		
 		if shape_selected != -1
 		{
+			var _col = colour;
+			var _alp = alpha;
 			with shape_selected
 			{
-				colour = other.colour;
-				alpha = other.alpha;
+				colour = _col;
+				alpha = _alp;
 			}
 		}
 	}
@@ -226,15 +251,15 @@ function PolyGmEditorDrawGUI()
 			break;
 			
 		case EDITOR_STATES.DRAW:
-			var _str = "Freehand: " + string(auto_draw);
-			if auto_draw == 0 _str = "Point-by-point"
+			var _str = "Freehand: " + string(global.auto_draw);
+			if global.auto_draw == 0 _str = "Point-by-point"
 			var _b = new Button(_str);
 			_b.DefineTL(global.bb_padding, global.bb_padding + (_y * i), string_width(_b.text), _h);
 			_b.Draw();
 			if _b.Pressed()
 			{
-				if auto_draw == 0 auto_draw = get_integer("Distance between points:", 64);
-				else auto_draw = 0;
+				if global.auto_draw == 0 global.auto_draw = get_integer("Distance between points:", 64);
+				else global.auto_draw = 0;
 			}
 			i++; if _b.Hover() hover_on_button = true;
 			

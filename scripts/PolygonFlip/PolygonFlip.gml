@@ -7,16 +7,17 @@ function PolygonFlip(_shape, _horizontally)
 	{
 		with _shape
 		{
+			var _len = array_length(array);
 			if _horizontally
 			{
-				for (var i = 0; i < array_length(array); i++;)
+				for (var i = 0; i < _len; i++;)
 				{
 					array[i].x = x - (array[i].x - x);
 				}
 			}
 			else
 			{
-				for (var i = 0; i < array_length(array); i++;)
+				for (var i = 0; i < _len; i++;)
 				{
 					array[i].y = y - (array[i].y - y);
 				}

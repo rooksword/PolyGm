@@ -100,7 +100,8 @@ function PolygonUpdate()
 	SetHandles();
 	
 	hover_handle = -1;
-	for (var i = 0; i < array_length(handles); i++;)
+	var _len = array_length(handles);
+	for (var i = 0; i < _len; i++;)
 	{
 		if point_in_circle(PolyGmEditor.mouse_xc, PolyGmEditor.mouse_yc, handles[i].x, handles[i].y, global.handle_size) hover_handle = i;	
 	}

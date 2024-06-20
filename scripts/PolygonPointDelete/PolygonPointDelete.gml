@@ -3,7 +3,8 @@
 function PolygonPointDelete(_p)
 {
 	var _index = -1;
-	for (var i = 0; i < array_length(array); i++;)
+	var _len = array_length(array);
+	for (var i = 0; i < _len; i++;)
 	{
 		if array[i] == _p
 		{

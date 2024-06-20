@@ -2,7 +2,8 @@
 /// @param {array} _spd Angle by which to rotate the polygon
 function PolygonRotate(_spd)
 {
-	for (var i = 0; i < array_length(array); i++;)
+	var _len = array_length(array);
+	for (var i = 0; i < _len; i++;)
 	{
 		var _p = array[i];
 		var _dist = point_distance(_p.x, _p.y, x, y);

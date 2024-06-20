@@ -13,21 +13,47 @@ if file_exists(global.save_directory + "layers.sav")
 else
 {
 	var _layers = layer_get_all();
-	for (var i = 0; i < array_length(_layers); i++;)
+	var _len = array_length(_layers);
+	for (var i = 0; i < _len; i++;)
 	{
 		var _lay = _layers[i];
-		array_push(global.layers, {
-			name: layer_get_name(_lay),
-			locked: false,
-			visible: true,
-			colour: c_white,
-			alpha: 255
-		});
+		var _name = layer_get_name(_lay);
+		if string_copy(_name, 1, 3) == "PGM"
+		{
+			array_push(global.layers, {
+				name: _name,
+				locked: false,
+				visible: true,
+				colour: c_white,
+				alpha: 255
+			});
+		}
 	}
 }
 
 instance_create_layer(0, 0, "GUI", PolyGmEditor);
+instance_create_layer(0, 0, "PGMTop", PolyGmShapeDraw);	
+
+if file_exists(global.save_directory + "bezier.sav")
+{
+	var _buffer = buffer_load(global.save_directory + "bezier.sav");
+	var _string = buffer_read(_buffer, buffer_string);
+	buffer_delete(_buffer);
 	
+	var _load_data = json_parse(_string);
+	
+	while array_length(_load_data) > 0
+	{
+		var _load_entity = array_pop(_load_data);
+		var _inst = instance_create_layer(0, 0, "PGMBezier", PolyGmBezier);
+		with _inst
+		{
+			line = _load_entity.line;
+		}
+		array_push(PolyGmShapeDraw.shapes, _inst);
+	}
+}
+
 if file_exists(global.save_directory + "polygons.sav")
 {
 	var _buffer = buffer_load(global.save_directory + "polygons.sav");
@@ -52,5 +78,11 @@ if file_exists(global.save_directory + "polygons.sav")
 			
 			PolygonUpdate();
 		}
+		array_push(PolyGmShapeDraw.shapes, _inst);
 	}
 }
+
+array_sort(PolyGmShapeDraw.shapes, function(_elm1, _elm2)
+{
+    return _elm2.depth - _elm1.depth;
+});

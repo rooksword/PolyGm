@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Vec2",
   "parent":{
-    "name":"Edit at risk",
-    "path":"folders/PolyGm/Edit at risk.yy",
+    "name":"Demo",
+    "path":"folders/PolyGm/Demo.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

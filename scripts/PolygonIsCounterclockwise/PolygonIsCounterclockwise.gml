@@ -4,7 +4,8 @@
 function PolygonIsCounterclockwise(_polygon)
 {
 	var _cw = 0;
-	for (var i = 0; i < array_length(_polygon); i++;)
+	var _len = array_length(_polygon);
+	for (var i = 0; i < _len; i++;)
 	{
 		var _p = _polygon[i];
 		var _q = (i < (array_length(_polygon) - 1)) ? _polygon[i + 1] : _polygon[0];
