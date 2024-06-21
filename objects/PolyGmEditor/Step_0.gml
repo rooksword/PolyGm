@@ -26,6 +26,25 @@ for (var i = 0; i < _len; i++;)
 	layer_set_visible(_lay_real, _lay.visible);
 }
 
+if shape_selected != -1
+{
+	if not dbg_section_exists(shape_dbgsection)
+	{
+		dbg_view_delete(dbgview);
+		dbgview = dbg_view("PolyGmEditor", visible, 0, 18, 300, display_get_height() - 18);
+		DBGSettings();
+		DBGShape();
+		if shape_selected.object_index == PolyGmObject DBGObject();
+		DBGLayers();
+		DBGInformation();
+	}
+}
+else
+{
+	if dbg_section_exists(shape_dbgsection) dbg_section_delete(shape_dbgsection);
+	if dbg_section_exists(object_dbgsection) dbg_section_delete(object_dbgsection);
+}
+
 if active
 {
 	switch state
@@ -207,7 +226,7 @@ if active
 }
 else
 {
-	shape_selected = -1;	
+	//shape_selected = -1;	
 }
 
 PolygonActivation();

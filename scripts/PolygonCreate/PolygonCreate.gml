@@ -17,10 +17,13 @@ function PolygonCreate(_x, _y, _layer, _colour, _alpha, _sprite)
 	}
 	
 	array_push(PolyGmShapeDraw.shapes, _inst);
-	array_sort(PolyGmShapeDraw.shapes, function(_elm1, _elm2)
+	if array_length(PolyGmShapeDraw.shapes) > 1
 	{
-	    return _elm2.depth - _elm1.depth;
-	});
+		array_sort(PolyGmShapeDraw.shapes, function(_elm1, _elm2)
+		{
+		    return _elm2.depth - _elm1.depth;
+		});
+	}
 	
 	return _inst;
 }

@@ -86,7 +86,7 @@ global.auto_draw_circles = 2;
 
 // Draw info text
 
-global.info_text = true;
+global.info_text = "Middle click or press ALT to move the camera\nPress SHIFT to snap the mouse to the grid\nNumber of active shapes: "+string(instance_number(PolyGmShape));
 
 // Grid size (for snapping the mouse to the grid)
 
