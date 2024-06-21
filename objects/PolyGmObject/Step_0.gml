@@ -3,8 +3,8 @@
 var _mx = PolyGmEditor.mouse_xc;
 var _my = PolyGmEditor.mouse_yc;
 
-mo = point_distance(_mx, _my, origin.x, origin.y) < 10;
-mt = point_distance(_mx, _my, target.x, target.y) < 10;
+mo = point_distance(_mx, _my, origin.x, origin.y) < 20;
+mt = point_distance(_mx, _my, target.x, target.y) < 20;
 
 var _val = (0.5 + sin((offset - 1.5) + (current_time / 1000 * spd)) / 2);
 

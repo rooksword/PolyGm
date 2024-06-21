@@ -1,5 +1,5 @@
 /// @desc Creates a new instance of PolyGmShape which is a duplicate of the selected instances
-/// @param {array} _polygon Array of an ordered series of coordinated pairs (Vec2) defining the shape of a polygon
+/// @param {Id.Instance} _shape Instance of PolyGmShape
 /// @param {real} _x_offset Pixels to horizontally offset the new shape by
 /// @param {real} _y_offset Pixels to vertically offset the new shape by
 function PolygonDuplicate(_polygon, _x_offset, _y_offset)

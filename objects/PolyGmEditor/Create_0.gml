@@ -1,5 +1,16 @@
 /// @desc Initialize
 
+layers_dbgview = dbg_view("Layers", visible);
+var _len = array_length(global.layers);
+for (var i = 0; i < _len; i++;)
+{
+	var _lay = global.layers[i];
+	dbg_text(_lay.name);
+	dbg_checkbox(ref_create(_lay, "visible"), "Visible");
+	dbg_checkbox(ref_create(_lay, "locked"), "Locked");
+	dbg_colour(ref_create(_lay, "colour"), "Blend Colour");
+}
+
 window_set_cursor(cr_none); // Remove default windows cursor
 						    
 gpu_set_texrepeat(true);    // Set all textures to repeat infinitely

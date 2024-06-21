@@ -13,7 +13,19 @@ var _m = PosGui(mouse_xc, mouse_yc);
 
 #endregion
 
-active = true;
+active = not is_mouse_over_debug_overlay();
+
+if !active window_set_cursor(cr_arrow);
+else window_set_cursor(cr_none);
+
+var _len = array_length(global.layers);
+for (var i = 0; i < _len; i++;)
+{
+	var _lay = global.layers[i];
+	var _lay_real = LayerFind(_lay.name);
+	layer_set_visible(_lay_real, _lay.visible);
+}
+
 if active
 {
 	switch state
